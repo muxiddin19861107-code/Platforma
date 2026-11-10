@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Junior IT Academy — HTML & CSS kursi</title>
+  
+  <!-- Tailwind CSS, FontAwesome va Confetti CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    @keyframes coin-bounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.25); }
+    }
+    .coin-pop { animation: coin-bounce 0.4s ease-in-out; }
+  </style>
+</head>
+<body class="bg-[#F8FAFC] font-sans text-slate-800 antialiased min-h-screen">
+
+  <!-- ================= 1. HEADER (GAMIFICATION STATUS) ================= -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm px-4 lg:px-8 py-3">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      
+      <!-- Logo -->
+      <div class="flex items-center gap-3">
+        <div class="bg-gradient-to-tr from-indigo-600 to-violet-600 text-white font-black text-2xl w-11 h-11 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-200">
+          J
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-lg text-slate-900 tracking-tight">Junior IT</span>
+            <span class="bg-amber-100 text-amber-800 text-[11px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
+              <i class="fa-brands fa-html5 text-orange-600"></i> HTML & CSS
+            </span>
+          </div>
+          <p class="text-xs text-slate-400 font-medium">Frontend Veb-Dasturlash</p>
+        </div>
+      </div>
+
+      <!-- Gamification Balansi -->
+      <div class="flex items-center gap-2 md:gap-4 bg-slate-100 p-1.5 md:px-4 rounded-2xl border border-slate-200">
+        <!-- Strike -->
+        <div class="flex items-center gap-1.5 font-bold text-orange-500 text-sm md:text-base px-2 py-1" title="Ketma-ket dars qilgan kunlar">
+          <i class="fa-solid fa-fire text-lg animate-bounce"></i>
+          <span id="stat-streak">5</span> <span class="hidden md:inline text-xs text-slate-500">kun</span>
+        </div>
+
+        <div class="w-px h-5 bg-slate-300"></div>
+
+        <!-- Tangalar -->
+        <div class="flex items-center gap-1.5 font-bold text-amber-500 text-sm md:text-base px-2 py-1 cursor-pointer" onclick="openMarketModal()" title="Do'konni ochish">
+          <i class="fa-solid fa-coins text-lg"></i>
+          <span id="stat-coins" class="transition-all">350</span>
+        </div>
+
+        <div class="w-px h-5 bg-slate-300"></div>
+
+        <!-- XP & Level -->
+        <div class="flex items-center gap-2 px-2 py-1">
+          <i class="fa-solid fa-bolt text-indigo-600 text-lg"></i>
+          <div class="text-left">
+            <div class="text-xs font-extrabold text-indigo-600"><span id="stat-xp">1450</span> XP</div>
+            <div class="text-[10px] text-slate-400 font-bold uppercase" id="stat-level">Level 2</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profil & Market tugmasi -->
+      <div class="flex items-center gap-3">
+        <button onclick="openMarketModal()" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-600 font-bold px-3.5 py-2 rounded-xl text-xs flex items-center gap-2 transition border border-indigo-200">
+          <i class="fa-solid fa-store text-amber-500"></i>
+          <span class="hidden sm:inline">Junior Market</span>
+        </button>
+        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=AkmalWeb" alt="Avatar" class="w-10 h-10 rounded-2xl bg-indigo-50 border-2 border-indigo-400 p-0.5" />
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ================= 2. ASOSIY MAYDON ================= -->
+  <main class="max-w-7xl mx-auto p-4 lg:p-6 grid grid-cols-1 lg:grid-cols-4 gap-6">
+
+    <!-- CHAP USTUN: Darslar Mundarijasi (Roadmap) -->
+    <div class="lg:col-span-1 space-y-5">
+      <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm">
+        <h3 class="font-extrabold text-slate-800 text-xs uppercase tracking-wider mb-4 flex items-center justify-between">
+          <span>Darslar Yo'lakchasi</span>
+          <span class="text-xs text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md font-bold">1-Modul</span>
+        </h3>
+
+        <div class="space-y-2.5" id="roadmap-list">
+          <!-- JS orqali to'ldiriladi -->
+        </div>
+      </div>
+
+      <!-- Market Vitrinasi (Kichik banner) -->
+      <div class="bg-gradient-to-br from-indigo-600 to-purple-700 text-white rounded-3xl p-5 shadow-lg relative overflow-hidden">
+        <div class="flex justify-between items-center mb-2">
+          <h4 class="font-bold text-sm flex items-center gap-2">
+            <i class="fa-solid fa-gift text-amber-300"></i> Junior Sovg'alar
+          </h4>
+          <span class="text-[10px] bg-white/20 font-bold px-2 py-0.5 rounded-full">Sovg'a oling</span>
+        </div>
+        <p class="text-xs text-indigo-100 mb-4">Dars va testlardan tanga to'plab, brend sovg'alarga ega bo'ling!</p>
+        <button onclick="openMarketModal()" class="w-full bg-amber-400 hover:bg-amber-300 text-slate-900 font-extrabold text-xs py-2.5 rounded-xl transition shadow flex items-center justify-center gap-2">
+          <i class="fa-solid fa-bag-shopping"></i> Marketni ochish
+        </button>
+      </div>
+
+      <!-- Peshqadamlar (Leaderboard) -->
+      <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm">
+        <h4 class="font-bold text-xs uppercase text-slate-400 tracking-wider mb-3 flex items-center gap-2">
+          <i class="fa-solid fa-crown text-amber-500"></i> Peshqadamlar
+        </h4>
+        <div class="space-y-2.5 text-xs">
+          <div class="flex items-center justify-between p-2 rounded-xl bg-amber-50 border border-amber-200 font-bold">
+            <span class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-amber-400 text-white flex items-center justify-center text-[10px]">1</span> Jasur Komilov</span>
+            <span class="text-amber-700">1850 XP</span>
+          </div>
+          <div class="flex items-center justify-between p-2 rounded-xl bg-indigo-50 border border-indigo-200 font-bold">
+            <span class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-indigo-600 text-white flex items-center justify-center text-[10px]">2</span> Akmal Shokirov (Siz)</span>
+            <span class="text-indigo-600" id="lb-my-xp">1450 XP</span>
+          </div>
+          <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-100 font-semibold text-slate-600">
+            <span class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-slate-300 text-slate-700 flex items-center justify-center text-[10px]">3</span> Madina Aliyeva</span>
+            <span>1200 XP</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- O'RTA & O'NG QISM: Dars ko'rish, 10 ta Test, Amaliyot -->
+    <div class="lg:col-span-3 space-y-6">
+
+      <!-- Bosqichlar ko'rsatkichi (Stepper) -->
+      <div class="bg-white rounded-2xl p-2.5 border border-slate-200 shadow-sm flex items-center justify-between gap-1">
+        <button id="step-btn-1" onclick="switchStep(1)" class="flex-1 flex items-center justify-center gap-2 py-2.5 px-2 rounded-xl font-bold text-xs md:text-sm transition-all bg-indigo-600 text-white shadow-md">
+          <i class="fa-solid fa-circle-play"></i> 1. Video Dars
+        </button>
+        <div class="w-6 h-0.5 bg-slate-200"></div>
+        <button id="step-btn-2" onclick="switchStep(2)" class="flex-1 flex items-center justify-center gap-2 py-2.5 px-2 rounded-xl font-bold text-xs md:text-sm transition-all bg-slate-100 text-slate-400 cursor-not-allowed" disabled>
+          <i class="fa-solid fa-list-check"></i> 2. Test (10 ta)
+        </button>
+        <div class="w-6 h-0.5 bg-slate-200"></div>
+        <button id="step-btn-3" onclick="switchStep(3)" class="flex-1 flex items-center justify-center gap-2 py-2.5 px-2 rounded-xl font-bold text-xs md:text-sm transition-all bg-slate-100 text-slate-400 cursor-not-allowed" disabled>
+          <i class="fa-solid fa-code"></i> 3. Amaliy Kodlash
+        </button>
+      </div>
+
+      <!-- ================= 1-BOSQICH: VIDEO DARSLIK (YOUTUBE) ================= -->
+      <section id="stage-video" class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm space-y-5">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="bg-indigo-50 text-indigo-700 font-extrabold text-[11px] px-2.5 py-0.5 rounded-full uppercase">1-Dars</span>
+              <h2 class="text-xl font-black text-slate-900">HTML va CSS ga Kirish: Web Sahifa Qanday Ishlaydi?</h2>
+            </div>
+            <p class="text-xs text-slate-500 mt-1">Videoni diqqat bilan tomosha qiling, so'ngra test savollariga javob bering.</p>
+          </div>
+          <div class="flex gap-2">
+            <span class="bg-amber-50 border border-amber-200 text-amber-700 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5">
+              <i class="fa-solid fa-coins text-amber-500"></i> +25 Tanga
+            </span>
+            <span class="bg-indigo-50 border border-indigo-200 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5">
+              <i class="fa-solid fa-bolt text-indigo-500"></i> +100 XP
+            </span>
+          </div>
+        </div>
+
+        <!-- HAQIQIY YOUTUBE VIDEO PLEER -->
+        <div class="w-full aspect-video rounded-2xl overflow-hidden shadow-xl border-2 border-slate-800 bg-black">
+          <iframe 
+            class="w-full h-full"
+            src="https://www.youtube.com/embed/ItZN6o0ylao?enablejsapi=1" 
+            title="HTML va CSS darsi" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <!-- Dars konspekti -->
+        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs space-y-2">
+          <h4 class="font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+            <i class="fa-solid fa-bookmark text-indigo-600"></i> Ushbu darsdagi eng muhim qoidalar:
+          </h4>
+          <ul class="list-disc list-inside space-y-1 text-slate-600">
+            <li><b>HTML</b> (HyperText Markup Language) — veb-sahifaning skeleti va tuzilishi hisoblanadi.</li>
+            <li>Har bir sahifa <code class="bg-white px-1.5 py-0.5 rounded border text-indigo-600 font-mono font-bold">&lt;!DOCTYPE html&gt;</code> bilan boshlanib, asosiy ko'rinadigan qism <code class="bg-white px-1.5 py-0.5 rounded border text-indigo-600 font-mono font-bold">&lt;body&gt;</code> ichida joylashadi.</li>
+            <li><b>CSS</b> (Cascading Style Sheets) — sahifaga rang, shrift, hajm va go'zallik beruvchi stillar to'plamidir.</li>
+          </ul>
+        </div>
+
+        <!-- Tugma -->
+        <div class="flex justify-end pt-2">
+          <button onclick="finishVideoAndUnlockTest()" class="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-extrabold px-7 py-3 rounded-2xl shadow-lg shadow-indigo-200 transition active:scale-95 flex items-center gap-2 text-sm">
+            <span>Videoni ko'rdim, Testga o'tish</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- ================= 2-BOSQICH: 10 TA HTML & CSS TESTI ================= -->
+      <section id="stage-quiz" class="hidden bg-white rounded-3xl p-6 border border-slate-200 shadow-sm space-y-6">
+        
+        <!-- Progress Bar -->
+        <div class="flex items-center justify-between text-xs font-bold text-slate-500">
+          <span class="text-indigo-600 flex items-center gap-1.5">
+            <i class="fa-solid fa-circle-question"></i> Savol: <span id="quiz-current-num">1</span> / 10
+          </span>
+          <span class="text-emerald-600 font-extrabold" id="quiz-score-badge">To'g'ri javoblar: 0 ta</span>
+        </div>
+        <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden p-0.5 border border-slate-200">
+          <div id="quiz-progress-fill" class="h-full bg-gradient-to-r from-indigo-600 to-violet-500 rounded-full transition-all duration-300" style="width: 10%;"></div>
+        </div>
+
+        <!-- Savol matni -->
+        <div class="py-2">
+          <span class="text-xs font-extrabold uppercase tracking-wider text-indigo-500 bg-indigo-50 px-3 py-1 rounded-full">HTML & CSS Savoli</span>
+          <h3 id="quiz-question-text" class="text-lg md:text-xl font-black text-slate-900 mt-3 leading-snug">
+            1. HTML qisqartmasining to'liq ma'nosi nima?
+          </h3>
+        </div>
+
+        <!-- Variantlar konteyneri -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="quiz-options-container">
+          <!-- JS orqali to'ldiriladi -->
+        </div>
+
+        <!-- Feedback (Javob tushuntirishi) -->
+        <div id="quiz-feedback" class="hidden rounded-2xl p-4 text-xs font-bold flex items-center justify-between gap-3">
+          <span id="quiz-feedback-text"></span>
+          <button id="quiz-next-btn" onclick="nextQuestion()" class="bg-slate-900 text-white px-5 py-2.5 rounded-xl hover:bg-slate-800 transition whitespace-nowrap">
+            Keyingisi <i class="fa-solid fa-arrow-right ml-1"></i>
+          </button>
+        </div>
+
+        <!-- Natija xulosasi (10 ta savol tugagach) -->
+        <div id="quiz-finished-modal" class="hidden bg-slate-50 border-2 border-dashed border-indigo-200 rounded-3xl p-8 text-center space-y-4">
+          <div class="w-16 h-16 mx-auto bg-amber-100 text-amber-500 rounded-full flex items-center justify-center text-3xl shadow">
+            <i class="fa-solid fa-award"></i>
+          </div>
+          <h3 class="text-2xl font-black text-slate-900" id="quiz-result-title">Test yakunlandi!</h3>
+          <p class="text-sm text-slate-600 max-w-md mx-auto" id="quiz-result-desc">
+            Siz 10 ta savoldan 8 tasiga to'g'ri javob berdingiz!
+          </p>
+          <div class="pt-2 flex justify-center gap-3">
+            <button id="quiz-retry-btn" onclick="restartQuiz()" class="hidden bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-5 py-2.5 rounded-xl text-sm transition">
+              Qayta topshirish
+            </button>
+            <button id="quiz-go-task-btn" onclick="unlockTaskStep()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold px-6 py-2.5 rounded-xl text-sm shadow-lg shadow-indigo-200 transition">
+              Amaliy kodlashga o'tish <i class="fa-solid fa-laptop-code ml-1"></i>
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ================= 3-BOSQICH: AMALIY KODLASH VA LIVE PREVIEW ================= -->
+      <section id="stage-task" class="hidden bg-white rounded-3xl p-6 border border-slate-200 shadow-sm space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-4 flex-wrap gap-2">
+          <div>
+            <span class="text-[11px] font-extrabold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full uppercase tracking-wider">
+              Amaliy Mashg'ulot
+            </span>
+            <h2 class="text-xl font-black text-slate-900 mt-2">Vazifa: Shaxsiy Web Vizitka Yarating</h2>
+          </div>
+          <span class="text-xs bg-amber-100 text-amber-800 font-extrabold px-3 py-1.5 rounded-full flex items-center gap-1">
+            🏆 Mukofot: +30 Tanga & +120 XP
+          </span>
+        </div>
+
+        <div class="bg-indigo-50/60 border border-indigo-100 rounded-2xl p-4 text-xs text-slate-700 space-y-2">
+          <p class="font-bold text-indigo-900 flex items-center gap-2 text-sm">
+            <i class="fa-solid fa-list-check text-indigo-600"></i> Topshiriq talablari:
+          </p>
+          <ul class="list-disc list-inside space-y-1">
+            <li><code class="font-mono font-bold bg-white px-1 rounded">&lt;h1&gt;</code> tegi yordamida o'z ism-familiyangizni yozing;</li>
+            <li><code class="font-mono font-bold bg-white px-1 rounded">&lt;p&gt;</code> tegi orqali qiziqishingiz (masalan, dasturlash) haqida yozing;</li>
+            <li>CSS orqali kartaga rang bering va markazga joylashtiring.</li>
+          </ul>
+        </div>
+
+        <!-- Kod muharriri va Jonli Natija (Live Preview) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Kod yozish oynasi -->
+          <div>
+            <div class="flex items-center justify-between bg-slate-800 text-slate-300 px-4 py-2 rounded-t-xl text-xs font-mono font-bold">
+              <span><i class="fa-brands fa-html5 text-orange-500"></i> index.html</span>
+              <button onclick="runLiveCode()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1 rounded text-[11px] font-sans font-bold flex items-center gap-1 transition">
+                <i class="fa-solid fa-play text-[10px]"></i> Ishga tushirish
+              </button>
+            </div>
+            <textarea 
+              id="html-code-input"
+              rows="9"
+              class="w-full bg-slate-900 text-emerald-400 font-mono text-xs p-4 rounded-b-xl border-x-2 border-b-2 border-slate-800 focus:outline-none focus:border-indigo-500 shadow-inner"
+            ><div style="background: linear-gradient(135deg, #6366f1, #a855f7); color: white; padding: 25px; border-radius: 16px; text-align: center; font-family: sans-serif;">
+  <h1 style="margin: 0; font-size: 22px;">Salom, men Akmalman! 👋</h1>
+  <p style="font-size: 13px; opacity: 0.9; margin: 10px 0;">Men Junior IT akademiyasida HTML va CSS o'rganyapman!</p>
+  <button style="background: #fbbf24; color: #1e1b4b; border: none; padding: 8px 18px; border-radius: 8px; font-weight: bold; cursor: pointer;">Portfolio</button>
+</div></textarea>
+          </div>
+
+          <!-- Jonli Natija (Preview) -->
+          <div>
+            <div class="bg-slate-200 text-slate-700 px-4 py-2 rounded-t-xl text-xs font-bold flex items-center justify-between">
+              <span><i class="fa-solid fa-desktop text-indigo-600"></i> Jonli Ko'rinish (Brauzer)</span>
+              <span class="text-[10px] text-slate-500">Avto-yangilanadi</span>
+            </div>
+            <div class="border-2 border-slate-200 rounded-b-xl h-[178px] bg-white overflow-hidden p-2 flex items-center justify-center">
+              <iframe id="live-preview-frame" class="w-full h-full border-0"></iframe>
+            </div>
+          </div>
+        </div>
+
+        <!-- Topshirish tugmasi -->
+        <div class="flex items-center justify-between pt-2">
+          <p class="text-xs text-slate-400 italic">Kodingizni tahrirlang va "Ishga tushirish" orqali tekshiring.</p>
+          <button onclick="submitHTMLTask()" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-extrabold px-7 py-3 rounded-2xl shadow-lg shadow-emerald-100 transition active:scale-95 flex items-center gap-2 text-sm">
+            <i class="fa-solid fa-paper-plane"></i>
+            <span>Vazifani topshirish</span>
+          </button>
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+
+  <!-- ================= 4. JUNIOR MARKET MODAL (TO'LIQ ISHLOVCHI DO'KON) ================= -->
+  <div id="market-modal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 max-h-[90vh] flex flex-col">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl">
+            <i class="fa-solid fa-store"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-black text-slate-900">Junior Sovg'alar Do'koni</h3>
+            <p class="text-xs text-slate-400 font-medium">To'plangan tangalaringizni haqiqiy sovg'alarga almashtiring</p>
+          </div>
+        </div>
+        <button onclick="closeMarketModal()" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 flex items-center justify-center text-sm">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Balans va Xaridlar Tablari -->
+      <div class="flex items-center justify-between py-3 border-b border-slate-100">
+        <div class="flex items-center gap-2 text-sm font-bold text-amber-600 bg-amber-50 px-3 py-1.5 rounded-xl border border-amber-200">
+          <i class="fa-solid fa-coins"></i> Sizning balansingiz: <span id="modal-user-coins">350</span> tanga
+        </div>
+        <div class="flex gap-2">
+          <button id="tab-shop-btn" onclick="switchMarketTab('shop')" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-indigo-600 text-white">
+            Do'kon
+          </button>
+          <button id="tab-inventory-btn" onclick="switchMarketTab('inventory')" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200">
+            Mening buyurtmalarim (<span id="orders-count">0</span>)
+          </button>
+        </div>
+      </div>
+
+      <!-- Mahsulotlar ro'yxati -->
+      <div id="market-products-tab" class="overflow-y-auto py-4 space-y-3 flex-1 pr-1">
+        <!-- JS orqali 6 ta mahsulot chiqadi -->
+      </div>
+
+      <!-- Xaridlar tarixi tab -->
+      <div id="market-inventory-tab" class="hidden overflow-y-auto py-4 space-y-3 flex-1 pr-1">
+        <div id="inventory-empty-msg" class="text-center py-10 text-slate-400 text-xs">
+          <i class="fa-solid fa-box-open text-4xl mb-2 text-slate-300"></i>
+          <p>Hozircha hech qanday sovg'a sotib olmadingiz.</p>
+        </div>
+        <div id="inventory-list" class="space-y-2"></div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ================= 5. JAVASCRIPT LOGIKASI ================= -->
+  <script>
+    /* ================= 1. OVOZ EFFEKTLARI (Web Audio API) ================= */
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playSound(type) {
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      const now = audioCtx.currentTime;
+
+      if (type === 'coin') {
+        osc.frequency.setValueAtTime(987.77, now);
+        osc.frequency.setValueAtTime(1318.51, now + 0.08);
+        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+        osc.start(now);
+        osc.stop(now + 0.35);
+      } else if (type === 'correct') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(523.25, now);
+        osc.frequency.setValueAtTime(659.25, now + 0.1);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+        osc.start(now);
+        osc.stop(now + 0.3);
+      } else if (type === 'wrong') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(180, now);
+        osc.frequency.setValueAtTime(130, now + 0.1);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+        osc.start(now);
+        osc.stop(now + 0.3);
+      }
+    }
+
+    /* ================= 2. FOYDALANUVCHI MA'LUMOTLARI (STATE) ================= */
+    let userStats = {
+      coins: 350,
+      xp: 1450,
+      streak: 5,
+      level: 2
+    };
+
+    let userPurchases = []; // Xaridlar ro'yxati
+
+    function updateStatsUI() {
+      document.getElementById('stat-coins').innerText = userStats.coins;
+      document.getElementById('modal-user-coins').innerText = userStats.coins;
+      document.getElementById('stat-xp').innerText = userStats.xp;
+      document.getElementById('lb-my-xp').innerText = `${userStats.xp} XP`;
+      document.getElementById('stat-streak').innerText = userStats.streak;
+      document.getElementById('stat-level').innerText = `Level ${Math.floor(userStats.xp / 600) + 1}`;
+      
+      const coinEl = document.getElementById('stat-coins');
+      coinEl.classList.add('coin-pop');
+      setTimeout(() => coinEl.classList.remove('coin-pop'), 400);
+    }
+
+    /* ================= 3. DARSLAR RO'YXATI (ROADMAP) ================= */
+    const lessons = [
+      { id: 1, title: "1. HTML va CSS ga Kirish", status: "active" },
+      { id: 2, title: "2. Matn va Sarlavhalar (h1-h6, p)", status: "locked" },
+      { id: 3, title: "3. Rasmlar va Havolalar (img, a)", status: "locked" },
+      { id: 4, title: "4. Ranglar va Shriftlar (CSS Colors)", status: "locked" },
+      { id: 5, title: "5. Flexbox va Sayt Maketi", status: "locked" }
+    ];
+
+    function renderRoadmap() {
+      const container = document.getElementById('roadmap-list');
+      container.innerHTML = '';
+
+      lessons.forEach(l => {
+        const item = document.createElement('div');
+        let icon = '';
+        let style = 'p-3 rounded-2xl border flex items-center justify-between text-xs font-bold transition ';
+
+        if (l.status === 'completed') {
+          icon = '<i class="fa-solid fa-circle-check text-emerald-500 text-base"></i>';
+          style += 'border-emerald-200 bg-emerald-50/50 text-slate-800';
+        } else if (l.status === 'active') {
+          icon = '<span class="w-3 h-3 rounded-full bg-indigo-600 animate-ping"></span>';
+          style += 'border-indigo-600 bg-indigo-50 text-indigo-900 shadow-sm';
+        } else {
+          icon = '<i class="fa-solid fa-lock text-slate-400"></i>';
+          style += 'border-slate-200 bg-slate-50 text-slate-400 cursor-not-allowed';
+        }
+
+        item.className = style;
+        item.innerHTML = `
+          <div class="flex items-center gap-2.5">
+            ${icon}
+            <span>${l.title}</span>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    /* ================= 4. STEPPER BOSHQARUVI ================= */
+    let currentStep = 1;
+    let isTestUnlocked = false;
+    let isTaskUnlocked = false;
+
+    function switchStep(step) {
+      if (step === 2 && !isTestUnlocked) return alert("Avval video darsni ko'rib bo'ling!");
+      if (step === 3 && !isTaskUnlocked) return alert("Avval testdan kamida 70% to'plang!");
+
+      currentStep = step;
+
+      [1, 2, 3].forEach(s => {
+        const btn = document.getElementById(`step-btn-${s}`);
+        if (s === step) {
+          btn.className = "flex-1 flex items-center justify-center gap-2 py-2.5 px-2 rounded-xl font-bold text-xs md:text-sm transition-all bg-indigo-600 text-white shadow-md";
+        } else {
+          const isAvail = (s === 2 && isTestUnlocked) || (s === 3 && isTaskUnlocked) || s === 1;
+          btn.className = `flex-1 flex items-center justify-center gap-2 py-2.5 px-2 rounded-xl font-bold text-xs md:text-sm transition-all ${
+            isAvail ? 'bg-slate-100 text-slate-700 hover:bg-slate-200 cursor-pointer' : 'bg-slate-50 text-slate-300 cursor-not-allowed'
+          }`;
+        }
+      });
+
+      document.getElementById('stage-video').classList.toggle('hidden', step !== 1);
+      document.getElementById('stage-quiz').classList.toggle('hidden', step !== 2);
+      document.getElementById('stage-task').classList.toggle('hidden', step !== 3);
+
+      if (step === 3) {
+        runLiveCode();
+      }
+    }
+
+    function finishVideoAndUnlockTest() {
+      isTestUnlocked = true;
+      const testBtn = document.getElementById('step-btn-2');
+      testBtn.removeAttribute('disabled');
+      testBtn.classList.remove('cursor-not-allowed');
+      playSound('coin');
+      switchStep(2);
+      initQuiz();
+    }
+
+    /* ================= 5. 10 TA HAQIQIY HTML & CSS TESTI ================= */
+    const quizData = [
+      {
+        question: "1. HTML qisqartmasining to'liq ma'nosi nima?",
+        options: ["HyperText Markup Language", "HighTech Modern Language", "Hyperlinks and Text Management", "Home Tool Markup Language"],
+        correct: 0,
+        explanation: "HTML — HyperText Markup Language (Gipermatnli belgilash tili) hisoblanadi."
+      },
+      {
+        question: "2. Saytning foydalanuvchiga ko'rinadigan barcha asosiy qismi qaysi teg ichida yoziladi?",
+        options: ["<head>", "<meta>", "<body>", "<title>"],
+        correct: 2,
+        explanation: "Veb-sahifaning hamma ko'rinadigan kontenti aynan <body> ichida yoziladi."
+      },
+      {
+        question: "3. Eng katta va eng muhim sarlavha qaysi teg orqali hosil qilinadi?",
+        options: ["<h6>", "<head>", "<header>", "<h1>"],
+        correct: 3,
+        explanation: "<h1> eng katta sarlavha bo'lib, <h6> eng kichigi hisoblanadi."
+      },
+      {
+        question: "4. Matnli xatboshi (paragraf) yaratish uchun qaysi teg ishlatiladi?",
+        options: ["<p>", "<paragraph>", "<text>", "<span>"],
+        correct: 0,
+        explanation: "<p> tegi inglizcha 'paragraph' so'zidan olingan bo'lib, xatboshi yaratadi."
+      },
+      {
+        question: "5. Veb sahifaga rasm joylashtirish uchun qaysi teg va atribut to'g'ri?",
+        options: ["<image src='rasm.jpg'>", "<img src='rasm.jpg'>", "<pic url='rasm.jpg'>", "<img href='rasm.jpg'>"],
+        correct: 1,
+        explanation: "Rasm uchun <img src='...'> tegi ishlatiladi (yopiluvchi tegi yo'q)."
+      },
+      {
+        question: "6. Boshqa sahifaga o'tuvchi havola (link) qaysi teg bilan beriladi?",
+        options: ["<link>", "<a href='...'>", "<goto>", "<url>"],
+        correct: 1,
+        explanation: "<a href='...'> tegi (anchor) boshqa manzilga yo'naltiruvchi havola yaratadi."
+      },
+      {
+        question: "7. CSS veb dasturlashda nima vazifani bajaradi?",
+        options: ["Sayt bazasini saqlaydi", "Saytga rang, shrift va chiroyli dizayn beradi", "Foydalanuvchi parolini tekshiradi", "Serverni boshqaradi"],
+        correct: 1,
+        explanation: "CSS (Cascading Style Sheets) sahifaning vizual ko'rinishi va dizaynini belgilaydi."
+      },
+      {
+        question: "8. CSS da matn rangini qizil qilish uchun qaysi xossa yoziladi?",
+        options: ["text-color: red;", "font-color: red;", "color: red;", "background: red;"],
+        correct: 2,
+        explanation: "Matn shrifti rangini o'zgartirish uchun 'color: red;' xossasi ishlatiladi."
+      },
+      {
+        question: "9. Elementning fon rangini (orqa foni) o'zgartiruvchi CSS xossasi qaysi?",
+        options: ["background-color", "bg-text", "color-background", "paint-color"],
+        correct: 0,
+        explanation: "Fon rangi uchun 'background-color' (yoki qisqa 'background') qo'llaniladi."
+      },
+      {
+        question: "10. Matnni sahifaning qoq o'rtasiga (markazga) joylashtirish kodi qaysi?",
+        options: ["align: center;", "text-align: center;", "margin: middle;", "font-center: true;"],
+        correct: 1,
+        explanation: "'text-align: center;' matnni gorizontal markazlashtiradi."
+      }
+    ];
+
+    let currentQuestionIdx = 0;
+    let quizScore = 0;
+    let canAnswer = true;
+
+    function initQuiz() {
+      currentQuestionIdx = 0;
+      quizScore = 0;
+      canAnswer = true;
+      document.getElementById('quiz-finished-modal').classList.add('hidden');
+      document.getElementById('quiz-options-container').classList.remove('hidden');
+      document.getElementById('quiz-question-text').classList.remove('hidden');
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      canAnswer = true;
+      const q = quizData[currentQuestionIdx];
+
+      document.getElementById('quiz-current-num').innerText = currentQuestionIdx + 1;
+      document.getElementById('quiz-score-badge').innerText = `To'g'ri javoblar: ${quizScore} ta`;
+      document.getElementById('quiz-progress-fill').style.width = `${((currentQuestionIdx + 1) / quizData.length) * 100}%`;
+      document.getElementById('quiz-question-text').innerText = q.question;
+      document.getElementById('quiz-feedback').classList.add('hidden');
+
+      const container = document.getElementById('quiz-options-container');
+      container.innerHTML = '';
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = "w-full text-left p-4 rounded-2xl border-2 border-slate-200 hover:border-indigo-500 hover:bg-indigo-50/40 text-slate-800 font-bold text-xs md:text-sm transition flex items-center justify-between";
+        btn.innerHTML = `
+          <span>${String.fromCharCode(65 + idx)}) ${opt}</span>
+          <span class="w-6 h-6 rounded-full border border-slate-300 flex items-center justify-center text-xs text-slate-400">●</span>
+        `;
+        btn.onclick = () => selectQuizAnswer(idx, btn);
+        container.appendChild(btn);
+      });
+    }
+
+    function selectQuizAnswer(selectedIndex, clickedBtn) {
+      if (!canAnswer) return;
+      canAnswer = false;
+
+      const q = quizData[currentQuestionIdx];
+      const buttons = document.getElementById('quiz-options-container').querySelectorAll('button');
+      const feedbackBox = document.getElementById('quiz-feedback');
+      const feedbackText = document.getElementById('quiz-feedback-text');
+
+      if (selectedIndex === q.correct) {
+        quizScore++;
+        playSound('correct');
+        clickedBtn.className = "w-full text-left p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 text-emerald-900 font-bold text-xs md:text-sm transition flex items-center justify-between";
+        clickedBtn.querySelector('span:last-child').innerHTML = '<i class="fa-solid fa-check text-emerald-600"></i>';
+        
+        feedbackBox.className = "rounded-2xl p-4 text-xs font-bold flex items-center justify-between bg-emerald-50 text-emerald-800 border border-emerald-200";
+        feedbackText.innerHTML = `🎉 To'g'ri! ${q.explanation}`;
+      } else {
+        playSound('wrong');
+        clickedBtn.className = "w-full text-left p-4 rounded-2xl border-2 border-rose-500 bg-rose-50 text-rose-900 font-bold text-xs md:text-sm transition flex items-center justify-between";
+        clickedBtn.querySelector('span:last-child').innerHTML = '<i class="fa-solid fa-xmark text-rose-600"></i>';
+        
+        buttons[q.correct].className = "w-full text-left p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 text-emerald-900 font-bold text-xs md:text-sm transition flex items-center justify-between";
+        
+        feedbackBox.className = "rounded-2xl p-4 text-xs font-bold flex items-center justify-between bg-rose-50 text-rose-800 border border-rose-200";
+        feedbackText.innerHTML = `⚠️ Xato! To'g'ri javob: ${q.options[q.correct]}. ${q.explanation}`;
+      }
+
+      feedbackBox.classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+      currentQuestionIdx++;
+      if (currentQuestionIdx < quizData.length) {
+        renderQuestion();
+      } else {
+        showQuizResults();
+      }
+    }
+
+    function showQuizResults() {
+      document.getElementById('quiz-options-container').classList.add('hidden');
+      document.getElementById('quiz-question-text').classList.add('hidden');
+      document.getElementById('quiz-feedback').classList.add('hidden');
+
+      const modal = document.getElementById('quiz-finished-modal');
+      const title = document.getElementById('quiz-result-title');
+      const desc = document.getElementById('quiz-result-desc');
+      const retryBtn = document.getElementById('quiz-retry-btn');
+      const taskBtn = document.getElementById('quiz-go-task-btn');
+
+      modal.classList.remove('hidden');
+
+      if (quizScore >= 7) {
+        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+        playSound('coin');
+        
+        userStats.xp += 60;
+        userStats.coins += 20;
+        updateStatsUI();
+
+        title.innerText = "Ajoyib natija! Testdan o'tdingiz!";
+        desc.innerHTML = `Siz 10 ta savoldan <b>${quizScore} tasiga</b> to'g'ri javob berdingiz.<br><span class="text-emerald-600 font-bold">+20 Tanga va +60 XP berildi!</span>`;
+        retryBtn.classList.add('hidden');
+        taskBtn.classList.remove('hidden');
+
+        isTaskUnlocked = true;
+        const taskStepBtn = document.getElementById('step-btn-3');
+        taskStepBtn.removeAttribute('disabled');
+        taskStepBtn.classList.remove('cursor-not-allowed');
+      } else {
+        playSound('wrong');
+        title.innerText = "Yana bir bor urinib ko'ring!";
+        desc.innerHTML = `Siz 10 ta savoldan <b>${quizScore} tasiga</b> to'g'ri javob berdingiz. Amaliyotga o'tish uchun kamida 7 ta to'g'ri javob kerak.`;
+        retryBtn.classList.remove('hidden');
+        taskBtn.classList.add('hidden');
+      }
+    }
+
+    function restartQuiz() {
+      initQuiz();
+    }
+
+    function unlockTaskStep() {
+      switchStep(3);
+    }
+
+    /* ================= 6. AMALIY KODLASH VA LIVE PREVIEW ================= */
+    function runLiveCode() {
+      const code = document.getElementById('html-code-input').value;
+      const iframe = document.getElementById('live-preview-frame');
+      const doc = iframe.contentDocument || iframe.contentWindow.document;
+      doc.open();
+      doc.write(code);
+      doc.close();
+    }
+
+    function submitHTMLTask() {
+      const code = document.getElementById('html-code-input').value.trim();
+      if (!code.includes('<h1') || !code.includes('<p')) {
+        return alert("Iltimos, kodingizda <h1> va <p> teglarini ishlating!");
+      }
+
+      userStats.coins += 30;
+      userStats.xp += 120;
+      updateStatsUI();
+
+      confetti({ particleCount: 160, spread: 90, origin: { y: 0.5 } });
+      playSound('coin');
+
+      lessons[0].status = 'completed';
+      lessons[1].status = 'active';
+      renderRoadmap();
+
+      alert("🎉 Tabriklaymiz! Siz HTML va CSS bo'yicha amaliy topshiriqni muvaffaqiyatli yakunladingiz!\n\n+30 Tanga va +120 XP qo'shildi!\nNavbatdagi 2-dars ochildi!");
+    }
+
+    /* ================= 7. TO'LIQ ISHLOVCHI JUNIOR MARKET ================= */
+    const marketProducts = [
+      { id: 1, name: "Junior IT Stikerlar To'plami", price: 50, icon: "fa-tags", color: "from-pink-500 to-rose-500", desc: "Noutbuk va daftarlar uchun dasturchi stikerlari" },
+      { id: 2, name: "Junior Termos / Suv idishi", price: 150, icon: "fa-bottle-water", color: "from-sky-500 to-cyan-500", desc: "Darslarda ichish uchun qulay brend termos" },
+      { id: 3, name: "Junior IT Futbolkasi", price: 250, icon: "fa-shirt", color: "from-indigo-500 to-blue-600", desc: "100% paxta, qulay dasturchilar futbolkasi" },
+      { id: 4, name: "Junior Hudisi (Kastyum)", price: 450, icon: "fa-vest-patches", color: "from-purple-600 to-indigo-700", desc: "Issiq va chiroyli Junior Academy hudisi" },
+      { id: 5, name: "RGB Dasturchi Sichqonchasi", price: 600, icon: "fa-computer-mouse", color: "from-emerald-500 to-teal-600", desc: "Yorug'lik effektlariga ega tezkor sichqoncha" },
+      { id: 6, name: "Mexanik RGB Klaviatura", price: 850, icon: "fa-keyboard", color: "from-amber-500 to-orange-600", desc: "Kod yozish uchun maxsus mexanik klaviatura" },
+    ];
+
+    function openMarketModal() {
+      document.getElementById('market-modal').classList.remove('hidden');
+      switchMarketTab('shop');
+      renderMarketProducts();
+      updateInventoryUI();
+    }
+
+    function closeMarketModal() {
+      document.getElementById('market-modal').classList.add('hidden');
+    }
+
+    function switchMarketTab(tab) {
+      const isShop = tab === 'shop';
+      document.getElementById('market-products-tab').classList.toggle('hidden', !isShop);
+      document.getElementById('market-inventory-tab').classList.toggle('hidden', isShop);
+
+      document.getElementById('tab-shop-btn').className = `text-xs font-bold px-3 py-1.5 rounded-xl transition ${
+        isShop ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+      }`;
+      document.getElementById('tab-inventory-btn').className = `text-xs font-bold px-3 py-1.5 rounded-xl transition ${
+        !isShop ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+      }`;
+    }
+
+    function renderMarketProducts() {
+      const container = document.getElementById('market-products-tab');
+      container.innerHTML = '';
+
+      marketProducts.forEach(prod => {
+        const item = document.createElement('div');
+        item.className = "bg-slate-50 border border-slate-200 rounded-2xl p-4 flex items-center justify-between gap-4 hover:border-indigo-300 transition";
+        item.innerHTML = `
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr ${prod.color} text-white flex items-center justify-center text-xl shadow">
+              <i class="fa-solid ${prod.icon}"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-sm text-slate-800">${prod.name}</h4>
+              <p class="text-xs text-slate-400">${prod.desc}</p>
+              <span class="inline-block mt-1 font-extrabold text-xs text-amber-600 bg-amber-100/60 px-2 py-0.5 rounded-md">
+                <i class="fa-solid fa-coins"></i> ${prod.price} Tanga
+              </span>
+            </div>
+          </div>
+          <button onclick="buyProduct(${prod.id})" class="bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-extrabold text-xs px-4 py-2.5 rounded-xl shadow-md transition whitespace-nowrap">
+            Sotib olish
+          </button>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function buyProduct(prodId) {
+      const prod = marketProducts.find(p => p.id === prodId);
+      if (!prod) return;
+
+      if (userStats.coins >= prod.price) {
+        userStats.coins -= prod.price;
+        updateStatsUI();
+
+        userPurchases.push({
+          ...prod,
+          date: new Date().toLocaleTimeString('uz-UZ', { hour: '2-digit', minute: '2-digit' })
+        });
+
+        playSound('coin');
+        confetti({ particleCount: 90, spread: 60 });
+        updateInventoryUI();
+
+        alert(`🎉 Xaridingiz uchun rahmat!\n\nSiz "${prod.name}" sovg'asiga muvaffaqiyatli buyurtma berdingiz!\nUstozingiz tez orada darsda topshiradi.`);
+      } else {
+        playSound('wrong');
+        alert(`❌ Tangangiz yetarli emas!\n\nSizda: ${userStats.coins} tanga bor.\nKerak: ${prod.price} tanga.\nYana ${prod.price - userStats.coins} ta tanga to'plashingiz kerak!`);
+      }
+    }
+
+    function updateInventoryUI() {
+      document.getElementById('orders-count').innerText = userPurchases.length;
+      const list = document.getElementById('inventory-list');
+      const emptyMsg = document.getElementById('inventory-empty-msg');
+
+      if (userPurchases.length === 0) {
+        emptyMsg.classList.remove('hidden');
+        list.innerHTML = '';
+      } else {
+        emptyMsg.classList.add('hidden');
+        list.innerHTML = '';
+        userPurchases.forEach((item, idx) => {
+          const row = document.createElement('div');
+          row.className = "bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-center justify-between text-xs";
+          row.innerHTML = `
+            <div class="flex items-center gap-3">
+              <i class="fa-solid ${item.icon} text-indigo-600 text-base"></i>
+              <div>
+                <p class="font-bold text-slate-800">${item.name}</p>
+                <span class="text-[10px] text-slate-400">Buyurtma vaqti: ${item.date}</span>
+              </div>
+            </div>
+            <span class="bg-emerald-100 text-emerald-800 font-bold px-2 py-1 rounded-lg text-[10px]">
+              ✔ Qabul qilindi
+            </span>
+          `;
+          list.appendChild(row);
+        });
+      }
+    }
+
+    // Dastlabki yuklash
+    renderRoadmap();
+  </script>
+
+</body>
+</html>
