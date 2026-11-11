@@ -3,10 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Junior IT Academy — HTML & CSS kursi</title>
+  <title>Asilbek IT — Dasturlash & English for IT Platformasi</title>
   
-  <!-- Tailwind CSS, FontAwesome va Confetti CDN -->
+  <!-- Tailwind CSS (Dark mode qo'llab-quvvatlashi bilan) -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: '#4f46e5',
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- FontAwesome va Confetti CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
@@ -16,39 +30,44 @@
       50% { transform: scale(1.25); }
     }
     .coin-pop { animation: coin-bounce 0.4s ease-in-out; }
+    
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    .dark ::-webkit-scrollbar-thumb { background: #334155; }
   </style>
 </head>
-<body class="bg-[#F8FAFC] font-sans text-slate-800 antialiased min-h-screen">
+<body class="bg-[#F8FAFC] dark:bg-slate-950 font-sans text-slate-800 dark:text-slate-100 antialiased min-h-screen transition-colors duration-300">
 
-  <!-- ================= 1. HEADER (GAMIFICATION STATUS) ================= -->
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm px-4 lg:px-8 py-3">
-    <div class="max-w-7xl mx-auto flex items-center justify-between">
+  <!-- ================= 1. HEADER (GAMIFICATION & THEME STATUS) ================= -->
+  <header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-40 shadow-sm px-4 lg:px-8 py-3 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-2">
       
-      <!-- Logo -->
+      <!-- Logo: Asilbek IT -->
       <div class="flex items-center gap-3">
-        <div class="bg-gradient-to-tr from-indigo-600 to-violet-600 text-white font-black text-2xl w-11 h-11 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-200">
-          J
+        <div class="bg-gradient-to-tr from-indigo-600 to-violet-600 text-white font-black text-2xl w-11 h-11 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-300/30">
+          A
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <span class="font-extrabold text-lg text-slate-900 tracking-tight">Junior IT</span>
-            <span class="bg-amber-100 text-amber-800 text-[11px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
-              <i class="fa-brands fa-html5 text-orange-600"></i> HTML & CSS
+            <span class="font-extrabold text-lg text-slate-900 dark:text-white tracking-tight">Asilbek IT</span>
+            <span class="bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 text-[11px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1 border border-indigo-200 dark:border-indigo-800">
+              <i class="fa-solid fa-code text-indigo-500"></i> IT & English
             </span>
           </div>
-          <p class="text-xs text-slate-400 font-medium">Frontend Veb-Dasturlash</p>
+          <p class="text-xs text-slate-400 dark:text-slate-500 font-medium">Onlayn Ta'lim Platformasi</p>
         </div>
       </div>
 
       <!-- Gamification Balansi -->
-      <div class="flex items-center gap-2 md:gap-4 bg-slate-100 p-1.5 md:px-4 rounded-2xl border border-slate-200">
+      <div class="hidden sm:flex items-center gap-2 md:gap-4 bg-slate-100 dark:bg-slate-800/80 p-1.5 md:px-4 rounded-2xl border border-slate-200 dark:border-slate-700">
         <!-- Strike -->
         <div class="flex items-center gap-1.5 font-bold text-orange-500 text-sm md:text-base px-2 py-1" title="Ketma-ket dars qilgan kunlar">
           <i class="fa-solid fa-fire text-lg animate-bounce"></i>
-          <span id="stat-streak">5</span> <span class="hidden md:inline text-xs text-slate-500">kun</span>
+          <span id="stat-streak">5</span> <span class="hidden md:inline text-xs text-slate-500 dark:text-slate-400">kun</span>
         </div>
 
-        <div class="w-px h-5 bg-slate-300"></div>
+        <div class="w-px h-5 bg-slate-300 dark:bg-slate-700"></div>
 
         <!-- Tangalar -->
         <div class="flex items-center gap-1.5 font-bold text-amber-500 text-sm md:text-base px-2 py-1 cursor-pointer" onclick="openMarketModal()" title="Do'konni ochish">
@@ -56,25 +75,31 @@
           <span id="stat-coins" class="transition-all">350</span>
         </div>
 
-        <div class="w-px h-5 bg-slate-300"></div>
+        <div class="w-px h-5 bg-slate-300 dark:bg-slate-700"></div>
 
         <!-- XP & Level -->
         <div class="flex items-center gap-2 px-2 py-1">
-          <i class="fa-solid fa-bolt text-indigo-600 text-lg"></i>
+          <i class="fa-solid fa-bolt text-indigo-600 dark:text-indigo-400 text-lg"></i>
           <div class="text-left">
-            <div class="text-xs font-extrabold text-indigo-600"><span id="stat-xp">1450</span> XP</div>
+            <div class="text-xs font-extrabold text-indigo-600 dark:text-indigo-400"><span id="stat-xp">1450</span> XP</div>
             <div class="text-[10px] text-slate-400 font-bold uppercase" id="stat-level">Level 2</div>
           </div>
         </div>
       </div>
 
-      <!-- Profil & Market tugmasi -->
-      <div class="flex items-center gap-3">
-        <button onclick="openMarketModal()" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-600 font-bold px-3.5 py-2 rounded-xl text-xs flex items-center gap-2 transition border border-indigo-200">
-          <i class="fa-solid fa-store text-amber-500"></i>
-          <span class="hidden sm:inline">Junior Market</span>
+      <!-- Theme Switcher, Do'kon & Profil -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Qorong'u / Yorug' rejim tugmasi -->
+        <button onclick="toggleTheme()" class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition">
+          <i id="theme-icon" class="fa-solid fa-moon text-indigo-600 dark:text-amber-400 text-sm"></i>
+          <span id="theme-text" class="hidden md:inline">Qorong'u</span>
         </button>
-        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=AkmalWeb" alt="Avatar" class="w-10 h-10 rounded-2xl bg-indigo-50 border-2 border-indigo-400 p-0.5" />
+
+        <button onclick="openMarketModal()" class="bg-indigo-50 dark:bg-indigo-950/80 hover:bg-indigo-100 dark:hover:bg-indigo-900 text-indigo-600 dark:text-indigo-300 font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-2 transition border border-indigo-200 dark:border-indigo-800">
+          <i class="fa-solid fa-store text-amber-500"></i>
+          <span class="hidden sm:inline">Asilbek Market</span>
+        </button>
+        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=AsilbekWeb" alt="Avatar" class="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-indigo-50 border-2 border-indigo-500 p-0.5" />
       </div>
 
     </div>
@@ -83,24 +108,33 @@
   <!-- ================= 2. ASOSIY MAYDON ================= -->
   <main class="max-w-7xl mx-auto p-4 lg:p-6 grid grid-cols-1 lg:grid-cols-4 gap-6">
 
-    <!-- CHAP USTUN: Darslar Mundarijasi (Roadmap) -->
+    <!-- CHAP USTUN: 15 ta Darslar Mundarijasi (Roadmap) -->
     <div class="lg:col-span-1 space-y-5">
-      <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm">
-        <h3 class="font-extrabold text-slate-800 text-xs uppercase tracking-wider mb-4 flex items-center justify-between">
-          <span>Darslar Yo'lakchasi</span>
-          <span class="text-xs text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md font-bold">1-Modul</span>
-        </h3>
+      <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm transition-colors">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="font-extrabold text-slate-800 dark:text-white text-xs uppercase tracking-wider">
+            Darslar Yo'lakchasi
+          </h3>
+          <span class="text-xs text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/80 px-2.5 py-0.5 rounded-md font-bold">15 ta dars</span>
+        </div>
 
-        <div class="space-y-2.5" id="roadmap-list">
-          <!-- JS orqali to'ldiriladi -->
+        <!-- Filter Tablari (Hammasi, IT, English) -->
+        <div class="grid grid-cols-3 gap-1 mb-3 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl text-[11px] font-bold">
+          <button onclick="filterRoadmap('all', this)" class="rm-filter-btn py-1 rounded-lg bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm font-bold">Barchasi</button>
+          <button onclick="filterRoadmap('it', this)" class="rm-filter-btn py-1 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900">IT (10)</button>
+          <button onclick="filterRoadmap('eng', this)" class="rm-filter-btn py-1 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900">English (5)</button>
+        </div>
+
+        <div class="space-y-2 max-h-[460px] overflow-y-auto pr-1" id="roadmap-list">
+          <!-- JS orqali 15 ta dars joylanadi -->
         </div>
       </div>
 
-      <!-- Market Vitrinasi (Kichik banner) -->
-      <div class="bg-gradient-to-br from-indigo-600 to-purple-700 text-white rounded-3xl p-5 shadow-lg relative overflow-hidden">
+      <!-- Asilbek IT Sovg'alar Banneri -->
+      <div class="bg-gradient-to-br from-indigo-600 via-indigo-700 to-purple-800 text-white rounded-3xl p-5 shadow-lg relative overflow-hidden">
         <div class="flex justify-between items-center mb-2">
           <h4 class="font-bold text-sm flex items-center gap-2">
-            <i class="fa-solid fa-gift text-amber-300"></i> Junior Sovg'alar
+            <i class="fa-solid fa-gift text-amber-300"></i> Asilbek IT Sovg'alar
           </h4>
           <span class="text-[10px] bg-white/20 font-bold px-2 py-0.5 rounded-full">Sovg'a oling</span>
         </div>
@@ -111,71 +145,78 @@
       </div>
 
       <!-- Peshqadamlar (Leaderboard) -->
-      <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm">
-        <h4 class="font-bold text-xs uppercase text-slate-400 tracking-wider mb-3 flex items-center gap-2">
+      <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm transition-colors">
+        <h4 class="font-bold text-xs uppercase text-slate-400 dark:text-slate-500 tracking-wider mb-3 flex items-center gap-2">
           <i class="fa-solid fa-crown text-amber-500"></i> Peshqadamlar
         </h4>
         <div class="space-y-2.5 text-xs">
-          <div class="flex items-center justify-between p-2 rounded-xl bg-amber-50 border border-amber-200 font-bold">
+          <div class="flex items-center justify-between p-2 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 font-bold">
             <span class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-amber-400 text-white flex items-center justify-center text-[10px]">1</span> Jasur Komilov</span>
-            <span class="text-amber-700">1850 XP</span>
+            <span class="text-amber-700 dark:text-amber-400">1850 XP</span>
           </div>
-          <div class="flex items-center justify-between p-2 rounded-xl bg-indigo-50 border border-indigo-200 font-bold">
-            <span class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-indigo-600 text-white flex items-center justify-center text-[10px]">2</span> Akmal Shokirov (Siz)</span>
-            <span class="text-indigo-600" id="lb-my-xp">1450 XP</span>
+          <div class="flex items-center justify-between p-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 font-bold">
+            <span class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-indigo-600 text-white flex items-center justify-center text-[10px]">2</span> Akmal (Siz)</span>
+            <span class="text-indigo-600 dark:text-indigo-400" id="lb-my-xp">1450 XP</span>
           </div>
-          <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-100 font-semibold text-slate-600">
-            <span class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-slate-300 text-slate-700 flex items-center justify-center text-[10px]">3</span> Madina Aliyeva</span>
+          <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 font-semibold text-slate-600 dark:text-slate-300">
+            <span class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-slate-300 dark:bg-slate-600 text-slate-700 dark:text-slate-300 flex items-center justify-center text-[10px]">3</span> Madina Aliyeva</span>
             <span>1200 XP</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- O'RTA & O'NG QISM: Dars ko'rish, 10 ta Test, Amaliyot -->
+    <!-- O'RTA & O'NG QISM: Dars ko'rish, Test, Amaliyot -->
     <div class="lg:col-span-3 space-y-6">
 
       <!-- Bosqichlar ko'rsatkichi (Stepper) -->
-      <div class="bg-white rounded-2xl p-2.5 border border-slate-200 shadow-sm flex items-center justify-between gap-1">
+      <div class="bg-white dark:bg-slate-900 rounded-2xl p-2.5 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between gap-1 transition-colors">
         <button id="step-btn-1" onclick="switchStep(1)" class="flex-1 flex items-center justify-center gap-2 py-2.5 px-2 rounded-xl font-bold text-xs md:text-sm transition-all bg-indigo-600 text-white shadow-md">
-          <i class="fa-solid fa-circle-play"></i> 1. Video Dars
+          <i class="fa-solid fa-circle-play"></i> 1. Video Dars (O'zbekcha)
         </button>
-        <div class="w-6 h-0.5 bg-slate-200"></div>
-        <button id="step-btn-2" onclick="switchStep(2)" class="flex-1 flex items-center justify-center gap-2 py-2.5 px-2 rounded-xl font-bold text-xs md:text-sm transition-all bg-slate-100 text-slate-400 cursor-not-allowed" disabled>
+        <div class="w-6 h-0.5 bg-slate-200 dark:bg-slate-700"></div>
+        <button id="step-btn-2" onclick="switchStep(2)" class="flex-1 flex items-center justify-center gap-2 py-2.5 px-2 rounded-xl font-bold text-xs md:text-sm transition-all bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 cursor-not-allowed" disabled>
           <i class="fa-solid fa-list-check"></i> 2. Test (10 ta)
         </button>
-        <div class="w-6 h-0.5 bg-slate-200"></div>
-        <button id="step-btn-3" onclick="switchStep(3)" class="flex-1 flex items-center justify-center gap-2 py-2.5 px-2 rounded-xl font-bold text-xs md:text-sm transition-all bg-slate-100 text-slate-400 cursor-not-allowed" disabled>
+        <div class="w-6 h-0.5 bg-slate-200 dark:bg-slate-700"></div>
+        <button id="step-btn-3" onclick="switchStep(3)" class="flex-1 flex items-center justify-center gap-2 py-2.5 px-2 rounded-xl font-bold text-xs md:text-sm transition-all bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 cursor-not-allowed" disabled>
           <i class="fa-solid fa-code"></i> 3. Amaliy Kodlash
         </button>
       </div>
 
-      <!-- ================= 1-BOSQICH: VIDEO DARSLIK (YOUTUBE) ================= -->
-      <section id="stage-video" class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm space-y-5">
+      <!-- ================= 1-BOSQICH: VIDEO DARSLIK (O'ZBEKCHA YOUTUBE) ================= -->
+      <section id="stage-video" class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-5 transition-colors">
         <div class="flex items-center justify-between flex-wrap gap-2">
           <div>
             <div class="flex items-center gap-2">
-              <span class="bg-indigo-50 text-indigo-700 font-extrabold text-[11px] px-2.5 py-0.5 rounded-full uppercase">1-Dars</span>
-              <h2 class="text-xl font-black text-slate-900">HTML va CSS ga Kirish: Web Sahifa Qanday Ishlaydi?</h2>
+              <span id="current-badge" class="bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-extrabold text-[11px] px-2.5 py-0.5 rounded-full uppercase border border-indigo-200 dark:border-indigo-800">
+                1-Dars
+              </span>
+              <h2 id="current-lesson-title" class="text-xl font-black text-slate-900 dark:text-white">
+                HTML va CSS ga Kirish: Web Sahifa Qanday Ishlaydi?
+              </h2>
             </div>
-            <p class="text-xs text-slate-500 mt-1">Videoni diqqat bilan tomosha qiling, so'ngra test savollariga javob bering.</p>
+            <p id="current-lesson-desc" class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+              Videoni diqqat bilan tomosha qiling, so'ngra test savollariga javob bering.
+            </p>
           </div>
           <div class="flex gap-2">
-            <span class="bg-amber-50 border border-amber-200 text-amber-700 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5">
+            <span class="bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-amber-700 dark:text-amber-400 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5">
               <i class="fa-solid fa-coins text-amber-500"></i> +25 Tanga
             </span>
-            <span class="bg-indigo-50 border border-indigo-200 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5">
+            <span class="bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-400 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5">
               <i class="fa-solid fa-bolt text-indigo-500"></i> +100 XP
             </span>
           </div>
         </div>
 
-        <!-- HAQIQIY YOUTUBE VIDEO PLEER -->
+        <!-- HAQIQIY O'ZBEKCHA YOUTUBE VIDEO PLEER -->
         <div class="w-full aspect-video rounded-2xl overflow-hidden shadow-xl border-2 border-slate-800 bg-black">
           <iframe 
+            id="youtube-player"
             class="w-full h-full"
-            src="https://www.youtube.com/embed/ItZN6o0ylao?enablejsapi=1" 
-            title="HTML va CSS darsi" 
+            src="https://www.youtube.com/embed/_j7yneg6if0?enablejsapi=1" 
+            title="Asilbek IT Darsi (O'zbek tilida)" 
             frameborder="0" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
             allowfullscreen>
@@ -183,76 +224,78 @@
         </div>
 
         <!-- Dars konspekti -->
-        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs space-y-2">
-          <h4 class="font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
-            <i class="fa-solid fa-bookmark text-indigo-600"></i> Ushbu darsdagi eng muhim qoidalar:
+        <div id="lesson-summary-box" class="bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-2xl p-4 text-xs space-y-2">
+          <h4 class="font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center gap-2">
+            <i class="fa-solid fa-bookmark text-indigo-600 dark:text-indigo-400"></i> Ushbu darsdagi eng muhim qoidalar:
           </h4>
-          <ul class="list-disc list-inside space-y-1 text-slate-600">
-            <li><b>HTML</b> (HyperText Markup Language) — veb-sahifaning skeleti va tuzilishi hisoblanadi.</li>
-            <li>Har bir sahifa <code class="bg-white px-1.5 py-0.5 rounded border text-indigo-600 font-mono font-bold">&lt;!DOCTYPE html&gt;</code> bilan boshlanib, asosiy ko'rinadigan qism <code class="bg-white px-1.5 py-0.5 rounded border text-indigo-600 font-mono font-bold">&lt;body&gt;</code> ichida joylashadi.</li>
-            <li><b>CSS</b> (Cascading Style Sheets) — sahifaga rang, shrift, hajm va go'zallik beruvchi stillar to'plamidir.</li>
+          <ul id="lesson-points" class="list-disc list-inside space-y-1 text-slate-600 dark:text-slate-300">
+            <li><b>HTML</b> (HyperText Markup Language) — veb-sahifaning asosiy skeleti va karkasi.</li>
+            <li>Har bir sahifa <code class="bg-white dark:bg-slate-900 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-700 text-indigo-600 dark:text-indigo-400 font-mono font-bold">&lt;!DOCTYPE html&gt;</code> bilan boshlanadi.</li>
+            <li><b>CSS</b> (Cascading Style Sheets) — sahifaga chiroyli dizayn, shrift va rang beradi.</li>
           </ul>
         </div>
 
         <!-- Tugma -->
         <div class="flex justify-end pt-2">
-          <button onclick="finishVideoAndUnlockTest()" class="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-extrabold px-7 py-3 rounded-2xl shadow-lg shadow-indigo-200 transition active:scale-95 flex items-center gap-2 text-sm">
+          <button onclick="finishVideoAndUnlockTest()" class="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-extrabold px-7 py-3 rounded-2xl shadow-lg shadow-indigo-300/30 transition active:scale-95 flex items-center gap-2 text-sm">
             <span>Videoni ko'rdim, Testga o'tish</span>
             <i class="fa-solid fa-arrow-right"></i>
           </button>
         </div>
       </section>
 
-      <!-- ================= 2-BOSQICH: 10 TA HTML & CSS TESTI ================= -->
-      <section id="stage-quiz" class="hidden bg-white rounded-3xl p-6 border border-slate-200 shadow-sm space-y-6">
+      <!-- ================= 2-BOSQICH: 10 TA TEST (XATOLIK TO'G'RILANGAN) ================= -->
+      <section id="stage-quiz" class="hidden bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6 transition-colors">
         
         <!-- Progress Bar -->
-        <div class="flex items-center justify-between text-xs font-bold text-slate-500">
-          <span class="text-indigo-600 flex items-center gap-1.5">
+        <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+          <span class="text-indigo-600 dark:text-indigo-400 flex items-center gap-1.5">
             <i class="fa-solid fa-circle-question"></i> Savol: <span id="quiz-current-num">1</span> / 10
           </span>
-          <span class="text-emerald-600 font-extrabold" id="quiz-score-badge">To'g'ri javoblar: 0 ta</span>
+          <span class="text-emerald-600 dark:text-emerald-400 font-extrabold" id="quiz-score-badge">To'g'ri javoblar: 0 ta</span>
         </div>
-        <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden p-0.5 border border-slate-200">
+        <div class="w-full h-3 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden p-0.5 border border-slate-200 dark:border-slate-700">
           <div id="quiz-progress-fill" class="h-full bg-gradient-to-r from-indigo-600 to-violet-500 rounded-full transition-all duration-300" style="width: 10%;"></div>
         </div>
 
         <!-- Savol matni -->
         <div class="py-2">
-          <span class="text-xs font-extrabold uppercase tracking-wider text-indigo-500 bg-indigo-50 px-3 py-1 rounded-full">HTML & CSS Savoli</span>
-          <h3 id="quiz-question-text" class="text-lg md:text-xl font-black text-slate-900 mt-3 leading-snug">
+          <span id="quiz-tag" class="text-xs font-extrabold uppercase tracking-wider text-indigo-500 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/80 px-3 py-1 rounded-full border border-indigo-200 dark:border-indigo-800">
+            IT & Texnologiya Savoli
+          </span>
+          <h3 id="quiz-question-text" class="text-lg md:text-xl font-black text-slate-900 dark:text-white mt-3 leading-snug">
             1. HTML qisqartmasining to'liq ma'nosi nima?
           </h3>
         </div>
 
         <!-- Variantlar konteyneri -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="quiz-options-container">
-          <!-- JS orqali to'ldiriladi -->
+          <!-- JS orqali xavfsiz to'ldiriladi -->
         </div>
 
         <!-- Feedback (Javob tushuntirishi) -->
         <div id="quiz-feedback" class="hidden rounded-2xl p-4 text-xs font-bold flex items-center justify-between gap-3">
           <span id="quiz-feedback-text"></span>
-          <button id="quiz-next-btn" onclick="nextQuestion()" class="bg-slate-900 text-white px-5 py-2.5 rounded-xl hover:bg-slate-800 transition whitespace-nowrap">
+          <button id="quiz-next-btn" onclick="nextQuestion()" class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-5 py-2.5 rounded-xl hover:bg-slate-800 transition whitespace-nowrap">
             Keyingisi <i class="fa-solid fa-arrow-right ml-1"></i>
           </button>
         </div>
 
         <!-- Natija xulosasi (10 ta savol tugagach) -->
-        <div id="quiz-finished-modal" class="hidden bg-slate-50 border-2 border-dashed border-indigo-200 rounded-3xl p-8 text-center space-y-4">
-          <div class="w-16 h-16 mx-auto bg-amber-100 text-amber-500 rounded-full flex items-center justify-center text-3xl shadow">
+        <div id="quiz-finished-modal" class="hidden bg-slate-50 dark:bg-slate-800/50 border-2 border-dashed border-indigo-200 dark:border-indigo-800 rounded-3xl p-8 text-center space-y-4">
+          <div class="w-16 h-16 mx-auto bg-amber-100 dark:bg-amber-950/60 text-amber-500 rounded-full flex items-center justify-center text-3xl shadow">
             <i class="fa-solid fa-award"></i>
           </div>
-          <h3 class="text-2xl font-black text-slate-900" id="quiz-result-title">Test yakunlandi!</h3>
-          <p class="text-sm text-slate-600 max-w-md mx-auto" id="quiz-result-desc">
+          <h3 class="text-2xl font-black text-slate-900 dark:text-white" id="quiz-result-title">Test yakunlandi!</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-300 max-w-md mx-auto" id="quiz-result-desc">
             Siz 10 ta savoldan 8 tasiga to'g'ri javob berdingiz!
           </p>
           <div class="pt-2 flex justify-center gap-3">
-            <button id="quiz-retry-btn" onclick="restartQuiz()" class="hidden bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-5 py-2.5 rounded-xl text-sm transition">
+            <button id="quiz-retry-btn" onclick="restartQuiz()" class="hidden bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-bold px-5 py-2.5 rounded-xl text-sm transition">
               Qayta topshirish
             </button>
-            <button id="quiz-go-task-btn" onclick="unlockTaskStep()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold px-6 py-2.5 rounded-xl text-sm shadow-lg shadow-indigo-200 transition">
-              Amaliy kodlashga o'tish <i class="fa-solid fa-laptop-code ml-1"></i>
+            <button id="quiz-go-task-btn" onclick="unlockTaskStep()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold px-6 py-2.5 rounded-xl text-sm shadow-lg shadow-indigo-300/30 transition">
+              Amaliy topshiriqqa o'tish <i class="fa-solid fa-laptop-code ml-1"></i>
             </button>
           </div>
         </div>
@@ -260,27 +303,29 @@
       </section>
 
       <!-- ================= 3-BOSQICH: AMALIY KODLASH VA LIVE PREVIEW ================= -->
-      <section id="stage-task" class="hidden bg-white rounded-3xl p-6 border border-slate-200 shadow-sm space-y-6">
-        <div class="flex items-center justify-between border-b border-slate-100 pb-4 flex-wrap gap-2">
+      <section id="stage-task" class="hidden bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6 transition-colors">
+        <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4 flex-wrap gap-2">
           <div>
-            <span class="text-[11px] font-extrabold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full uppercase tracking-wider">
+            <span class="text-[11px] font-extrabold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-3 py-1 rounded-full uppercase tracking-wider border border-emerald-200 dark:border-emerald-800">
               Amaliy Mashg'ulot
             </span>
-            <h2 class="text-xl font-black text-slate-900 mt-2">Vazifa: Shaxsiy Web Vizitka Yarating</h2>
+            <h2 id="task-title-text" class="text-xl font-black text-slate-900 dark:text-white mt-2">
+              Vazifa: Asilbek IT Shaxsiy Web Vizitka Yarating
+            </h2>
           </div>
-          <span class="text-xs bg-amber-100 text-amber-800 font-extrabold px-3 py-1.5 rounded-full flex items-center gap-1">
+          <span class="text-xs bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 font-extrabold px-3 py-1.5 rounded-full flex items-center gap-1 border border-amber-200 dark:border-amber-800">
             🏆 Mukofot: +30 Tanga & +120 XP
           </span>
         </div>
 
-        <div class="bg-indigo-50/60 border border-indigo-100 rounded-2xl p-4 text-xs text-slate-700 space-y-2">
-          <p class="font-bold text-indigo-900 flex items-center gap-2 text-sm">
-            <i class="fa-solid fa-list-check text-indigo-600"></i> Topshiriq talablari:
+        <div class="bg-indigo-50/60 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/50 rounded-2xl p-4 text-xs text-slate-700 dark:text-slate-300 space-y-2">
+          <p class="font-bold text-indigo-900 dark:text-indigo-300 flex items-center gap-2 text-sm">
+            <i class="fa-solid fa-list-check text-indigo-600 dark:text-indigo-400"></i> Topshiriq talablari:
           </p>
           <ul class="list-disc list-inside space-y-1">
-            <li><code class="font-mono font-bold bg-white px-1 rounded">&lt;h1&gt;</code> tegi yordamida o'z ism-familiyangizni yozing;</li>
-            <li><code class="font-mono font-bold bg-white px-1 rounded">&lt;p&gt;</code> tegi orqali qiziqishingiz (masalan, dasturlash) haqida yozing;</li>
-            <li>CSS orqali kartaga rang bering va markazga joylashtiring.</li>
+            <li><code class="font-mono font-bold bg-white dark:bg-slate-800 px-1 rounded">&lt;h1&gt;</code> tegi yordamida o'z ismingizni yozing;</li>
+            <li><code class="font-mono font-bold bg-white dark:bg-slate-800 px-1 rounded">&lt;p&gt;</code> tegi orqali qiziqishingiz (masalan, Asilbek IT talabasiman) deb yozing;</li>
+            <li>Ranglar va stillarni o'zgartirib dizayn bering.</li>
           </ul>
         </div>
 
@@ -288,7 +333,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <!-- Kod yozish oynasi -->
           <div>
-            <div class="flex items-center justify-between bg-slate-800 text-slate-300 px-4 py-2 rounded-t-xl text-xs font-mono font-bold">
+            <div class="flex items-center justify-between bg-slate-800 dark:bg-slate-950 text-slate-300 px-4 py-2 rounded-t-xl text-xs font-mono font-bold">
               <span><i class="fa-brands fa-html5 text-orange-500"></i> index.html</span>
               <button onclick="runLiveCode()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1 rounded text-[11px] font-sans font-bold flex items-center gap-1 transition">
                 <i class="fa-solid fa-play text-[10px]"></i> Ishga tushirish
@@ -298,20 +343,20 @@
               id="html-code-input"
               rows="9"
               class="w-full bg-slate-900 text-emerald-400 font-mono text-xs p-4 rounded-b-xl border-x-2 border-b-2 border-slate-800 focus:outline-none focus:border-indigo-500 shadow-inner"
-            ><div style="background: linear-gradient(135deg, #6366f1, #a855f7); color: white; padding: 25px; border-radius: 16px; text-align: center; font-family: sans-serif;">
-  <h1 style="margin: 0; font-size: 22px;">Salom, men Akmalman! 👋</h1>
-  <p style="font-size: 13px; opacity: 0.9; margin: 10px 0;">Men Junior IT akademiyasida HTML va CSS o'rganyapman!</p>
+            ><div style="background: linear-gradient(135deg, #4f46e5, #9333ea); color: white; padding: 25px; border-radius: 16px; text-align: center; font-family: sans-serif;">
+  <h1 style="margin: 0; font-size: 22px;">Salom, men Asilbek IT talabasiman! 🚀</h1>
+  <p style="font-size: 13px; opacity: 0.9; margin: 10px 0;">Men IT dasturlash va English for IT kurslarini muvaffaqiyatli o'rganyapman!</p>
   <button style="background: #fbbf24; color: #1e1b4b; border: none; padding: 8px 18px; border-radius: 8px; font-weight: bold; cursor: pointer;">Portfolio</button>
 </div></textarea>
           </div>
 
           <!-- Jonli Natija (Preview) -->
           <div>
-            <div class="bg-slate-200 text-slate-700 px-4 py-2 rounded-t-xl text-xs font-bold flex items-center justify-between">
-              <span><i class="fa-solid fa-desktop text-indigo-600"></i> Jonli Ko'rinish (Brauzer)</span>
-              <span class="text-[10px] text-slate-500">Avto-yangilanadi</span>
+            <div class="bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-4 py-2 rounded-t-xl text-xs font-bold flex items-center justify-between">
+              <span><i class="fa-solid fa-desktop text-indigo-600 dark:text-indigo-400"></i> Jonli Ko'rinish (Brauzer)</span>
+              <span class="text-[10px] text-slate-500 dark:text-slate-400">Avto-yangilanadi</span>
             </div>
-            <div class="border-2 border-slate-200 rounded-b-xl h-[178px] bg-white overflow-hidden p-2 flex items-center justify-center">
+            <div class="border-2 border-slate-200 dark:border-slate-800 rounded-b-xl h-[178px] bg-white overflow-hidden p-2 flex items-center justify-center">
               <iframe id="live-preview-frame" class="w-full h-full border-0"></iframe>
             </div>
           </div>
@@ -319,8 +364,8 @@
 
         <!-- Topshirish tugmasi -->
         <div class="flex items-center justify-between pt-2">
-          <p class="text-xs text-slate-400 italic">Kodingizni tahrirlang va "Ishga tushirish" orqali tekshiring.</p>
-          <button onclick="submitHTMLTask()" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-extrabold px-7 py-3 rounded-2xl shadow-lg shadow-emerald-100 transition active:scale-95 flex items-center gap-2 text-sm">
+          <p class="text-xs text-slate-400 dark:text-slate-500 italic">Kodingizni tahrirlang va "Ishga tushirish" orqali tekshiring.</p>
+          <button onclick="submitHTMLTask()" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-extrabold px-7 py-3 rounded-2xl shadow-lg shadow-emerald-200/40 transition active:scale-95 flex items-center gap-2 text-sm">
             <i class="fa-solid fa-paper-plane"></i>
             <span>Vazifani topshirish</span>
           </button>
@@ -332,36 +377,36 @@
   </main>
 
 
-  <!-- ================= 4. JUNIOR MARKET MODAL (TO'LIQ ISHLOVCHI DO'KON) ================= -->
-  <div id="market-modal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 max-h-[90vh] flex flex-col">
+  <!-- ================= 4. ASILBEK IT MARKET MODAL ================= -->
+  <div id="market-modal" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 max-h-[90vh] flex flex-col transition-colors">
       
       <!-- Modal Header -->
-      <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+      <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl">
+          <div class="w-10 h-10 rounded-2xl bg-amber-100 dark:bg-amber-950 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl">
             <i class="fa-solid fa-store"></i>
           </div>
           <div>
-            <h3 class="text-lg font-black text-slate-900">Junior Sovg'alar Do'koni</h3>
-            <p class="text-xs text-slate-400 font-medium">To'plangan tangalaringizni haqiqiy sovg'alarga almashtiring</p>
+            <h3 class="text-lg font-black text-slate-900 dark:text-white">Asilbek IT Sovg'alar Do'koni</h3>
+            <p class="text-xs text-slate-400 dark:text-slate-500 font-medium">To'plangan tangalaringizni brend sovg'alarga almashtiring</p>
           </div>
         </div>
-        <button onclick="closeMarketModal()" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 flex items-center justify-center text-sm">
+        <button onclick="closeMarketModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center text-sm transition">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
 
       <!-- Balans va Xaridlar Tablari -->
-      <div class="flex items-center justify-between py-3 border-b border-slate-100">
-        <div class="flex items-center gap-2 text-sm font-bold text-amber-600 bg-amber-50 px-3 py-1.5 rounded-xl border border-amber-200">
-          <i class="fa-solid fa-coins"></i> Sizning balansingiz: <span id="modal-user-coins">350</span> tanga
+      <div class="flex items-center justify-between py-3 border-b border-slate-100 dark:border-slate-800">
+        <div class="flex items-center gap-2 text-sm font-bold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 px-3 py-1.5 rounded-xl border border-amber-200 dark:border-amber-800">
+          <i class="fa-solid fa-coins"></i> Balansingiz: <span id="modal-user-coins">350</span> tanga
         </div>
         <div class="flex gap-2">
           <button id="tab-shop-btn" onclick="switchMarketTab('shop')" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-indigo-600 text-white">
             Do'kon
           </button>
-          <button id="tab-inventory-btn" onclick="switchMarketTab('inventory')" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200">
+          <button id="tab-inventory-btn" onclick="switchMarketTab('inventory')" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200">
             Mening buyurtmalarim (<span id="orders-count">0</span>)
           </button>
         </div>
@@ -369,13 +414,13 @@
 
       <!-- Mahsulotlar ro'yxati -->
       <div id="market-products-tab" class="overflow-y-auto py-4 space-y-3 flex-1 pr-1">
-        <!-- JS orqali 6 ta mahsulot chiqadi -->
+        <!-- JS orqali to'ldiriladi -->
       </div>
 
       <!-- Xaridlar tarixi tab -->
       <div id="market-inventory-tab" class="hidden overflow-y-auto py-4 space-y-3 flex-1 pr-1">
         <div id="inventory-empty-msg" class="text-center py-10 text-slate-400 text-xs">
-          <i class="fa-solid fa-box-open text-4xl mb-2 text-slate-300"></i>
+          <i class="fa-solid fa-box-open text-4xl mb-2 text-slate-300 dark:text-slate-600"></i>
           <p>Hozircha hech qanday sovg'a sotib olmadingiz.</p>
         </div>
         <div id="inventory-list" class="space-y-2"></div>
@@ -387,7 +432,48 @@
 
   <!-- ================= 5. JAVASCRIPT LOGIKASI ================= -->
   <script>
-    /* ================= 1. OVOZ EFFEKTLARI (Web Audio API) ================= */
+    /* ================= HTML TEGLARINI XAVFSIZ CHIQARISH (XATOLIKNI TUZATUVCHI) ================= */
+    function escapeHTML(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    /* ================= THEME (DARK / LIGHT REJIM) ================= */
+    function initTheme() {
+      const savedTheme = localStorage.getItem('asilbek_theme');
+      if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+        updateThemeUI(true);
+      } else {
+        document.documentElement.classList.remove('dark');
+        updateThemeUI(false);
+      }
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('asilbek_theme', isDark ? 'dark' : 'light');
+      updateThemeUI(isDark);
+    }
+
+    function updateThemeUI(isDark) {
+      const icon = document.getElementById('theme-icon');
+      const text = document.getElementById('theme-text');
+      if (isDark) {
+        icon.className = 'fa-solid fa-sun text-amber-400 text-sm';
+        text.innerText = "Yorug'";
+      } else {
+        icon.className = 'fa-solid fa-moon text-indigo-600 text-sm';
+        text.innerText = "Qorong'u";
+      }
+    }
+
+    /* ================= OVOZ EFFEKTLARI (Web Audio API) ================= */
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
     function playSound(type) {
@@ -425,7 +511,7 @@
       }
     }
 
-    /* ================= 2. FOYDALANUVCHI MA'LUMOTLARI (STATE) ================= */
+    /* ================= FOYDALANUVCHI MA'LUMOTLARI ================= */
     let userStats = {
       coins: 350,
       xp: 1450,
@@ -433,7 +519,7 @@
       level: 2
     };
 
-    let userPurchases = []; // Xaridlar ro'yxati
+    let userPurchases = [];
 
     function updateStatsUI() {
       document.getElementById('stat-coins').innerText = userStats.coins;
@@ -448,47 +534,281 @@
       setTimeout(() => coinEl.classList.remove('coin-pop'), 400);
     }
 
-    /* ================= 3. DARSLAR RO'YXATI (ROADMAP) ================= */
+    /* ================= 15 TA DARSLAR (100% SOF O'ZBEKCHA VIDEOLAR) ================= */
     const lessons = [
-      { id: 1, title: "1. HTML va CSS ga Kirish", status: "active" },
-      { id: 2, title: "2. Matn va Sarlavhalar (h1-h6, p)", status: "locked" },
-      { id: 3, title: "3. Rasmlar va Havolalar (img, a)", status: "locked" },
-      { id: 4, title: "4. Ranglar va Shriftlar (CSS Colors)", status: "locked" },
-      { id: 5, title: "5. Flexbox va Sayt Maketi", status: "locked" }
+      // 10 ta IT Web-dasturlash darsi (Ulug'bek Samig'jonov - Mohirdev rasmiy darslari)
+      { 
+        id: 1, 
+        type: 'it',
+        title: "1. HTML va CSS ga Kirish: Web Sahifa Qanday Ishlaydi?", 
+        videoId: "_j7yneg6if0",
+        desc: "Videoni diqqat bilan tomosha qiling, so'ngra test savollariga javob bering.",
+        status: "active",
+        points: [
+          "<b>HTML</b> — veb-sahifaning asosiy skeleti va karkasi hisoblanadi.",
+          "Har bir sahifa <code>&lt;!DOCTYPE html&gt;</code> bilan boshlanadi va <code>&lt;body&gt;</code> da asosiy qism joylashadi.",
+          "<b>CSS</b> — sahifaga chiroyli dizayn, shrift va rang beradi."
+        ]
+      },
+      { 
+        id: 2, 
+        type: 'it',
+        title: "2. Matn va Sarlavhalar (h1-h6, p, span)", 
+        videoId: "dgcyvjQiJnQ",
+        desc: "Sarlavhalar iyerarxiyasi, matn formatlash va paragraf teglari bilan ishlash.",
+        status: "completed",
+        points: [
+          "<code>&lt;h1&gt;</code> eng katta sarlavha, sahifada faqat bir marta ishlatilishi tavsiya etiladi.",
+          "<code>&lt;p&gt;</code> tegi yangi xatboshi yaratadi.",
+          "<code>&lt;span&gt;</code> qator ichidagi so'zlarga alohida stil berish uchun qo'llaniladi."
+        ]
+      },
+      { 
+        id: 3, 
+        type: 'it',
+        title: "3. Havolalar va Rasmlar (a, img)", 
+        videoId: "zZMnBvpXbqQ",
+        desc: "Sahifalararo o'tish linklari va media fayllarni to'g'ri joylashtirish.",
+        status: "locked",
+        points: [
+          "<code>&lt;a href='...'&gt;</code> havolalar yaratish uchun asosiy teg.",
+          "<code>&lt;img src='...' alt='...'&gt;</code> rasm joylash uchun xizmat qiladi.",
+          "<code>target='_blank'</code> atributi havolani yangi oynada ochadi."
+        ]
+      },
+      { 
+        id: 4, 
+        type: 'it',
+        title: "4. Ro'yxatlar va Jadvallar (ul, ol, table)", 
+        videoId: "jTV086eC0GY",
+        desc: "Tartiblangan va tartiblanmagan ro'yxatlar hamda jadvallar yaratish.",
+        status: "locked",
+        points: [
+          "<code>&lt;ul&gt;</code> — markerlangan (nuqtali) ro'yxat hosil qiladi.",
+          "<code>&lt;ol&gt;</code> — raqamlangan ro'yxat hosil qiladi.",
+          "Jadval uchun <code>&lt;table&gt;, &lt;tr&gt;, &lt;td&gt;, &lt;th&gt;</code> teglari ishlatiladi."
+        ]
+      },
+      { 
+        id: 5, 
+        type: 'it',
+        title: "5. Formalar va Inputlar (form, input, button)", 
+        videoId: "7MMHoURrJj4",
+        desc: "Foydalanuvchidan ma'lumot qabul qiluvchi formalar va tugmalar.",
+        status: "locked",
+        points: [
+          "<code>&lt;input type='text'&gt;</code> matn kiritish uchun.",
+          "<code>&lt;input type='password'&gt;</code> parolni yashirgan holda kiritadi.",
+          "Forma ma'lumotlari <code>&lt;button type='submit'&gt;</code> orqali jo'natiladi."
+        ]
+      },
+      { 
+        id: 6, 
+        type: 'it',
+        title: "6. CSS Ranglar, Shriftlar va Borderlar", 
+        videoId: "E62HTPMCYSE",
+        desc: "HEX, RGB ranglar, Google Fonts va chegaralar bilan professional bezatish.",
+        status: "locked",
+        points: [
+          "Ranglar nom bilan, HEX (#ff0000) yoki RGB orqali berilishi mumkin.",
+          "<code>border-radius</code> burchaklarni yumaloqlaydi.",
+          "<code>font-family</code> matn shriftini belgilaydi."
+        ]
+      },
+      { 
+        id: 7, 
+        type: 'it',
+        title: "7. CSS Box Model: Margin, Padding va Border", 
+        videoId: "dgcyvjQiJnQ",
+        desc: "Elementlarning ichki va tashqi bo'shliqlari bilan ishlash asoslari.",
+        status: "locked",
+        points: [
+          "<b>Padding</b> — elementning ichki bo'shlig'i.",
+          "<b>Margin</b> — elementning tashqi bo'shlig'i (boshqa elementlardan surish).",
+          "<code>box-sizing: border-box</code> o'lchamni hisoblashni osonlashtiradi."
+        ]
+      },
+      { 
+        id: 8, 
+        type: 'it',
+        title: "8. CSS Flexbox: Elementlarni Markazlashtirish", 
+        videoId: "E62HTPMCYSE",
+        desc: "Zamonaviy Flexbox qoidalari: justify-content va align-items.",
+        status: "locked",
+        points: [
+          "<code>display: flex</code> ota elementni moslashuvchan qiladi.",
+          "<code>justify-content: center</code> gorizontal markazlashtiradi.",
+          "<code>align-items: center</code> vertikal markazlashtiradi."
+        ]
+      },
+      { 
+        id: 9, 
+        type: 'it',
+        title: "9. Responsive Dizayn va Media Queries (@media)", 
+        videoId: "_j7yneg6if0",
+        desc: "Saytlarni smartfon va planshet ekranlariga to'liq moslashtirish.",
+        status: "locked",
+        points: [
+          "<code>@media (max-width: 768px)</code> mobil ekranlar uchun stillar yozadi.",
+          "Mobil versiyada shriftlar va paddinglarni moslab kichraytirish kerak.",
+          "Sayt har qanday ekranda chiroyli va qulay ochilishi shart."
+        ]
+      },
+      { 
+        id: 10, 
+        type: 'it',
+        title: "10. JavaScript Asoslari: O'zgaruvchilar va Hodisalar", 
+        videoId: "7MMHoURrJj4",
+        desc: "Sahifani jonlantirish, tugma bosilganda harakatlar bajarish.",
+        status: "locked",
+        points: [
+          "<code>let</code> va <code>const</code> orqali o'zgaruvchilar e'lon qilinadi.",
+          "<code>addEventListener('click')</code> tugma bosilishini tutib oladi.",
+          "DOM orqali HTML elementlar matni va rangini o'zgartirish mumkin."
+        ]
+      },
+
+      // 5 ta English for IT Darsi (O'zbek tilidagi tushuntirishlar bilan)
+      { 
+        id: 11, 
+        type: 'eng',
+        title: "11. English for IT: Alphabet & Tech Pronunciation", 
+        videoId: "zZMnBvpXbqQ",
+        desc: "Dasturchilar bilishi kerak bo'lgan inglizcha harflar va IT so'zlarining to'g'ri talaffuzi.",
+        status: "locked",
+        points: [
+          "IT sohasida harflarni xatosiz aytish (masalan: C++, SQL, API) o'ta muhim.",
+          "Unli va undosh tovushlarning dasturlash so'zlaridagi jaranglashi.",
+          "Tech so'zlarni to'g'ri o'qish (GUI - 'goo-ee', SQL - 'sequel')."
+        ]
+      },
+      { 
+        id: 12, 
+        type: 'eng',
+        title: "12. English Grammar: Present Simple in Tech Daily Routine", 
+        videoId: "_j7yneg6if0",
+        desc: "Har kungi dasturlash jarayonlari va vazifalarni ingliz tilida bayon qilish.",
+        status: "locked",
+        points: [
+          "'I write code every morning' — kundalik odatlarda Present Simple ishlatiladi.",
+          "'He fixes bugs in production' — uchinchi shaxsda fe'lga -s/-es qo'shiladi.",
+          "Daily Standup yig'ilishlarida qilingan ishlarni aytib berish."
+        ]
+      },
+      { 
+        id: 13, 
+        type: 'eng',
+        title: "13. Tech Vocabulary: 50 ta Eng Muhim Dasturchi So'zlari", 
+        videoId: "dgcyvjQiJnQ",
+        desc: "Deploy, Debug, Framework, Repository kabi so'zlarning haqiqiy ma'nosi va qo'llanishi.",
+        status: "locked",
+        points: [
+          "<b>Bug</b> — dasturdagi xatolik, <b>Debug</b> — xatolikni qidirib to'g'rilash.",
+          "<b>Deploy</b> — kodni serverga joylab, foydalanuvchilarga ochib berish.",
+          "<b>Repository</b> — Git loyihasi saqlanadigan papka/ombor."
+        ]
+      },
+      { 
+        id: 14, 
+        type: 'eng',
+        title: "14. Reading Tech Documentation: Hujjatlar bilan ishlash", 
+        videoId: "jTV086eC0GY",
+        desc: "Rasmiy kutubxonalar (MDN, React Docs)ni oson va tez o'qib tushunish sirlari.",
+        status: "locked",
+        points: [
+          "Qidiruvni samarali qilish: 'How to center div in CSS MDN'.",
+          "Hujjatlardagi 'Parameters', 'Return value' bo'limlarini tushunish.",
+          "Texnik so'zlar lug'atini doimiy to'ldirib borish."
+        ]
+      },
+      { 
+        id: 15, 
+        type: 'eng',
+        title: "15. English for Job Interview: IT Suhbatlardan Muvaffaqiyatli O'tish", 
+        videoId: "7MMHoURrJj4",
+        desc: "Xorijiy va mahalliy IT kompaniyalar bilan inglizcha suhbatda o'zingizni tanishtirish.",
+        status: "locked",
+        points: [
+          "'Tell me about yourself' savoliga professional tajriba bilan javob berish.",
+          "Kuchli tomonlar va qilingan loyihalar haqida ravon gapirish.",
+          "Suhbat so'ngida intervyu oluvchiga to'g'ri inglizcha savollar berish."
+        ]
+      }
     ];
 
-    function renderRoadmap() {
+    let currentLesson = lessons[0];
+
+    function renderRoadmap(filter = 'all') {
       const container = document.getElementById('roadmap-list');
       container.innerHTML = '';
 
-      lessons.forEach(l => {
+      const filtered = lessons.filter(l => filter === 'all' || l.type === filter);
+
+      filtered.forEach(l => {
         const item = document.createElement('div');
         let icon = '';
-        let style = 'p-3 rounded-2xl border flex items-center justify-between text-xs font-bold transition ';
+        let style = 'p-3 rounded-2xl border flex items-center justify-between text-xs font-bold transition cursor-pointer ';
 
         if (l.status === 'completed') {
           icon = '<i class="fa-solid fa-circle-check text-emerald-500 text-base"></i>';
-          style += 'border-emerald-200 bg-emerald-50/50 text-slate-800';
-        } else if (l.status === 'active') {
-          icon = '<span class="w-3 h-3 rounded-full bg-indigo-600 animate-ping"></span>';
-          style += 'border-indigo-600 bg-indigo-50 text-indigo-900 shadow-sm';
+          style += 'border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/50 dark:bg-emerald-950/20 text-slate-800 dark:text-slate-200';
+        } else if (l.status === 'active' || l.id === currentLesson.id) {
+          icon = '<span class="w-2.5 h-2.5 rounded-full bg-indigo-600 animate-ping"></span>';
+          style += 'border-indigo-600 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-900 dark:text-indigo-300 shadow-sm';
         } else {
           icon = '<i class="fa-solid fa-lock text-slate-400"></i>';
-          style += 'border-slate-200 bg-slate-50 text-slate-400 cursor-not-allowed';
+          style += 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 text-slate-400 dark:text-slate-500';
         }
 
         item.className = style;
+        item.onclick = () => selectLessonFromRoadmap(l.id);
+
         item.innerHTML = `
-          <div class="flex items-center gap-2.5">
+          <div class="flex items-center gap-2.5 pr-2 truncate">
             ${icon}
-            <span>${l.title}</span>
+            <span class="truncate">${escapeHTML(l.title)}</span>
           </div>
+          <span class="text-[10px] font-extrabold px-1.5 py-0.5 rounded uppercase ${
+            l.type === 'it' ? 'bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300' : 'bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300'
+          }">
+            ${l.type === 'it' ? 'IT' : 'ENG'}
+          </span>
         `;
         container.appendChild(item);
       });
     }
 
-    /* ================= 4. STEPPER BOSHQARUVI ================= */
+    function filterRoadmap(filter, btn) {
+      document.querySelectorAll('.rm-filter-btn').forEach(b => {
+        b.className = 'rm-filter-btn py-1 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900';
+      });
+      btn.className = 'rm-filter-btn py-1 rounded-lg bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm font-bold';
+      renderRoadmap(filter);
+    }
+
+    function selectLessonFromRoadmap(lessonId) {
+      const selected = lessons.find(l => l.id === lessonId);
+      if (!selected) return;
+
+      currentLesson = selected;
+      document.getElementById('current-badge').innerText = `${selected.id}-Dars (${selected.type === 'it' ? 'IT Kurs' : 'English'})`;
+      document.getElementById('current-lesson-title').innerText = selected.title;
+      document.getElementById('current-lesson-desc').innerText = selected.desc;
+      document.getElementById('youtube-player').src = `https://www.youtube.com/embed/${selected.videoId}?autoplay=1`;
+
+      const pointsUl = document.getElementById('lesson-points');
+      pointsUl.innerHTML = '';
+      selected.points.forEach(p => {
+        const li = document.createElement('li');
+        li.innerHTML = p;
+        pointsUl.appendChild(li);
+      });
+
+      renderRoadmap();
+      switchStep(1);
+    }
+
+    /* ================= STEPPER BOSHQARUVI ================= */
     let currentStep = 1;
     let isTestUnlocked = false;
     let isTaskUnlocked = false;
@@ -506,7 +826,7 @@
         } else {
           const isAvail = (s === 2 && isTestUnlocked) || (s === 3 && isTaskUnlocked) || s === 1;
           btn.className = `flex-1 flex items-center justify-center gap-2 py-2.5 px-2 rounded-xl font-bold text-xs md:text-sm transition-all ${
-            isAvail ? 'bg-slate-100 text-slate-700 hover:bg-slate-200 cursor-pointer' : 'bg-slate-50 text-slate-300 cursor-not-allowed'
+            isAvail ? 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 cursor-pointer' : 'bg-slate-50 dark:bg-slate-800/40 text-slate-300 dark:text-slate-600 cursor-not-allowed'
           }`;
         }
       });
@@ -530,7 +850,7 @@
       initQuiz();
     }
 
-    /* ================= 5. 10 TA HAQIQIY HTML & CSS TESTI ================= */
+    /* ================= 10 TA TEST SAVOLLARI ================= */
     const quizData = [
       {
         question: "1. HTML qisqartmasining to'liq ma'nosi nima?",
@@ -539,58 +859,58 @@
         explanation: "HTML — HyperText Markup Language (Gipermatnli belgilash tili) hisoblanadi."
       },
       {
-        question: "2. Saytning foydalanuvchiga ko'rinadigan barcha asosiy qismi qaysi teg ichida yoziladi?",
+        question: "2. Saytning foydalanuvchiga ko'rinadigan asosiy qismi qaysi tegda yoziladi?",
         options: ["<head>", "<meta>", "<body>", "<title>"],
         correct: 2,
-        explanation: "Veb-sahifaning hamma ko'rinadigan kontenti aynan <body> ichida yoziladi."
+        explanation: "Sahifaning hamma ko'rinadigan qismi <body> tegida yoziladi."
       },
       {
-        question: "3. Eng katta va eng muhim sarlavha qaysi teg orqali hosil qilinadi?",
+        question: "3. Eng katta va eng muhim sarlavha yaratish tegi qaysi?",
         options: ["<h6>", "<head>", "<header>", "<h1>"],
         correct: 3,
-        explanation: "<h1> eng katta sarlavha bo'lib, <h6> eng kichigi hisoblanadi."
+        explanation: "<h1> eng katta asosiy sarlavha tegi hisoblanadi."
       },
       {
         question: "4. Matnli xatboshi (paragraf) yaratish uchun qaysi teg ishlatiladi?",
         options: ["<p>", "<paragraph>", "<text>", "<span>"],
         correct: 0,
-        explanation: "<p> tegi inglizcha 'paragraph' so'zidan olingan bo'lib, xatboshi yaratadi."
+        explanation: "<p> tegi yangi matnli paragraf yaratadi."
       },
       {
-        question: "5. Veb sahifaga rasm joylashtirish uchun qaysi teg va atribut to'g'ri?",
-        options: ["<image src='rasm.jpg'>", "<img src='rasm.jpg'>", "<pic url='rasm.jpg'>", "<img href='rasm.jpg'>"],
+        question: "5. Veb sahifaga rasm qo'shish uchun qaysi teg ishlatiladi?",
+        options: ["<image src='...'>", "<img src='...'>", "<pic url='...'>", "<photo>"],
         correct: 1,
-        explanation: "Rasm uchun <img src='...'> tegi ishlatiladi (yopiluvchi tegi yo'q)."
+        explanation: "Rasm uchun to'g'ri teg <img src='...'> hisoblanadi."
       },
       {
-        question: "6. Boshqa sahifaga o'tuvchi havola (link) qaysi teg bilan beriladi?",
+        question: "6. Boshqa manzilga o'tuvchi havola (link) tegi qaysi?",
         options: ["<link>", "<a href='...'>", "<goto>", "<url>"],
         correct: 1,
-        explanation: "<a href='...'> tegi (anchor) boshqa manzilga yo'naltiruvchi havola yaratadi."
+        explanation: "<a href='...'> (anchor) boshqa sahifaga yo'naltiruvchi havola beradi."
       },
       {
-        question: "7. CSS veb dasturlashda nima vazifani bajaradi?",
-        options: ["Sayt bazasini saqlaydi", "Saytga rang, shrift va chiroyli dizayn beradi", "Foydalanuvchi parolini tekshiradi", "Serverni boshqaradi"],
-        correct: 1,
-        explanation: "CSS (Cascading Style Sheets) sahifaning vizual ko'rinishi va dizaynini belgilaydi."
-      },
-      {
-        question: "8. CSS da matn rangini qizil qilish uchun qaysi xossa yoziladi?",
+        question: "7. CSS da matn rangini qizil qilish uchun qaysi xossa yoziladi?",
         options: ["text-color: red;", "font-color: red;", "color: red;", "background: red;"],
         correct: 2,
         explanation: "Matn shrifti rangini o'zgartirish uchun 'color: red;' xossasi ishlatiladi."
       },
       {
-        question: "9. Elementning fon rangini (orqa foni) o'zgartiruvchi CSS xossasi qaysi?",
-        options: ["background-color", "bg-text", "color-background", "paint-color"],
-        correct: 0,
-        explanation: "Fon rangi uchun 'background-color' (yoki qisqa 'background') qo'llaniladi."
+        question: "8. [English for IT] 'Bug' so'zining dasturlashdagi ma'nosi nima?",
+        options: ["Kompyuter sichqonchasi", "Dasturdagi xatolik yoki kamchilik", "Yangi yangilanish", "Tezkor xotira"],
+        correct: 1,
+        explanation: "Bug (hasharot) dasturlashda tizimdagi xatolikni bildiradi."
       },
       {
-        question: "10. Matnni sahifaning qoq o'rtasiga (markazga) joylashtirish kodi qaysi?",
-        options: ["align: center;", "text-align: center;", "margin: middle;", "font-center: true;"],
+        question: "9. [English for IT] 'Deploy' so'zining to'g'ri ma'nosi nima?",
+        options: ["Loyihani serverga yuklab ishga tushirish", "Kodni o'chirib yuborish", "Kompyuterni qayta yoqish", "Parolni o'zgartirish"],
+        correct: 0,
+        explanation: "Deploy — tayyor veb-saytni serverga yuklash jarayoni."
+      },
+      {
+        question: "10. [English for IT] Dasturchilar har kuni o'tkazadigan qisqa yig'ilish nima deyiladi?",
+        options: ["Dinner meeting", "Daily Standup Meeting", "Night party", "Break time"],
         correct: 1,
-        explanation: "'text-align: center;' matnni gorizontal markazlashtiradi."
+        explanation: "IT jamoalarda har kuni ish rejalari 'Daily Standup'da muhokama qilinadi."
       }
     ];
 
@@ -623,10 +943,15 @@
 
       q.options.forEach((opt, idx) => {
         const btn = document.createElement('button');
-        btn.className = "w-full text-left p-4 rounded-2xl border-2 border-slate-200 hover:border-indigo-500 hover:bg-indigo-50/40 text-slate-800 font-bold text-xs md:text-sm transition flex items-center justify-between";
+        btn.className = "w-full text-left p-4 rounded-2xl border-2 border-slate-200 dark:border-slate-700 hover:border-indigo-500 hover:bg-indigo-50/40 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold text-xs md:text-sm transition flex items-center justify-between";
+        
+        // escapeHTML orqali barcha teglarni brauzerga xavfsiz va aniq ko'rinadigan qilamiz
         btn.innerHTML = `
-          <span>${String.fromCharCode(65 + idx)}) ${opt}</span>
-          <span class="w-6 h-6 rounded-full border border-slate-300 flex items-center justify-center text-xs text-slate-400">●</span>
+          <span class="flex items-center gap-2">
+            <span class="text-indigo-600 dark:text-indigo-400 font-extrabold">${String.fromCharCode(65 + idx)})</span>
+            <span class="font-mono bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-700">${escapeHTML(opt)}</span>
+          </span>
+          <span class="w-6 h-6 rounded-full border border-slate-300 dark:border-slate-600 flex items-center justify-center text-xs text-slate-400">●</span>
         `;
         btn.onclick = () => selectQuizAnswer(idx, btn);
         container.appendChild(btn);
@@ -645,20 +970,20 @@
       if (selectedIndex === q.correct) {
         quizScore++;
         playSound('correct');
-        clickedBtn.className = "w-full text-left p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 text-emerald-900 font-bold text-xs md:text-sm transition flex items-center justify-between";
+        clickedBtn.className = "w-full text-left p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-300 font-bold text-xs md:text-sm transition flex items-center justify-between";
         clickedBtn.querySelector('span:last-child').innerHTML = '<i class="fa-solid fa-check text-emerald-600"></i>';
         
-        feedbackBox.className = "rounded-2xl p-4 text-xs font-bold flex items-center justify-between bg-emerald-50 text-emerald-800 border border-emerald-200";
-        feedbackText.innerHTML = `🎉 To'g'ri! ${q.explanation}`;
+        feedbackBox.className = "rounded-2xl p-4 text-xs font-bold flex items-center justify-between bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800";
+        feedbackText.innerHTML = `🎉 To'g'ri! ${escapeHTML(q.explanation)}`;
       } else {
         playSound('wrong');
-        clickedBtn.className = "w-full text-left p-4 rounded-2xl border-2 border-rose-500 bg-rose-50 text-rose-900 font-bold text-xs md:text-sm transition flex items-center justify-between";
+        clickedBtn.className = "w-full text-left p-4 rounded-2xl border-2 border-rose-500 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-300 font-bold text-xs md:text-sm transition flex items-center justify-between";
         clickedBtn.querySelector('span:last-child').innerHTML = '<i class="fa-solid fa-xmark text-rose-600"></i>';
         
-        buttons[q.correct].className = "w-full text-left p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 text-emerald-900 font-bold text-xs md:text-sm transition flex items-center justify-between";
+        buttons[q.correct].className = "w-full text-left p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-300 font-bold text-xs md:text-sm transition flex items-center justify-between";
         
-        feedbackBox.className = "rounded-2xl p-4 text-xs font-bold flex items-center justify-between bg-rose-50 text-rose-800 border border-rose-200";
-        feedbackText.innerHTML = `⚠️ Xato! To'g'ri javob: ${q.options[q.correct]}. ${q.explanation}`;
+        feedbackBox.className = "rounded-2xl p-4 text-xs font-bold flex items-center justify-between bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-800";
+        feedbackText.innerHTML = `⚠️ Xato! To'g'ri javob: <b>${escapeHTML(q.options[q.correct])}</b>. ${escapeHTML(q.explanation)}`;
       }
 
       feedbackBox.classList.remove('hidden');
@@ -694,8 +1019,8 @@
         userStats.coins += 20;
         updateStatsUI();
 
-        title.innerText = "Ajoyib natija! Testdan o'tdingiz!";
-        desc.innerHTML = `Siz 10 ta savoldan <b>${quizScore} tasiga</b> to'g'ri javob berdingiz.<br><span class="text-emerald-600 font-bold">+20 Tanga va +60 XP berildi!</span>`;
+        title.innerText = "Ajoyib natija! Testdan muvaffaqiyatli o'tdingiz!";
+        desc.innerHTML = `Siz 10 ta savoldan <b>${quizScore} tasiga</b> to'g'ri javob berdingiz.<br><span class="text-emerald-600 dark:text-emerald-400 font-bold">+20 Tanga va +60 XP berildi!</span>`;
         retryBtn.classList.add('hidden');
         taskBtn.classList.remove('hidden');
 
@@ -720,7 +1045,7 @@
       switchStep(3);
     }
 
-    /* ================= 6. AMALIY KODLASH VA LIVE PREVIEW ================= */
+    /* ================= AMALIY KODLASH VA LIVE PREVIEW ================= */
     function runLiveCode() {
       const code = document.getElementById('html-code-input').value;
       const iframe = document.getElementById('live-preview-frame');
@@ -743,19 +1068,22 @@
       confetti({ particleCount: 160, spread: 90, origin: { y: 0.5 } });
       playSound('coin');
 
-      lessons[0].status = 'completed';
-      lessons[1].status = 'active';
+      currentLesson.status = 'completed';
+      const nextIdx = lessons.findIndex(l => l.id === currentLesson.id) + 1;
+      if (nextIdx < lessons.length) {
+        lessons[nextIdx].status = 'active';
+      }
       renderRoadmap();
 
-      alert("🎉 Tabriklaymiz! Siz HTML va CSS bo'yicha amaliy topshiriqni muvaffaqiyatli yakunladingiz!\n\n+30 Tanga va +120 XP qo'shildi!\nNavbatdagi 2-dars ochildi!");
+      alert(`🎉 Tabriklaymiz!\nSiz "${currentLesson.title}" bo'yicha amaliy topshiriqni muvaffaqiyatli yakunladingiz!\n\n+30 Tanga va +120 XP qo'shildi!\nNavbatdagi dars ochildi!`);
     }
 
-    /* ================= 7. TO'LIQ ISHLOVCHI JUNIOR MARKET ================= */
+    /* ================= ASILBEK IT MARKET ================= */
     const marketProducts = [
-      { id: 1, name: "Junior IT Stikerlar To'plami", price: 50, icon: "fa-tags", color: "from-pink-500 to-rose-500", desc: "Noutbuk va daftarlar uchun dasturchi stikerlari" },
-      { id: 2, name: "Junior Termos / Suv idishi", price: 150, icon: "fa-bottle-water", color: "from-sky-500 to-cyan-500", desc: "Darslarda ichish uchun qulay brend termos" },
-      { id: 3, name: "Junior IT Futbolkasi", price: 250, icon: "fa-shirt", color: "from-indigo-500 to-blue-600", desc: "100% paxta, qulay dasturchilar futbolkasi" },
-      { id: 4, name: "Junior Hudisi (Kastyum)", price: 450, icon: "fa-vest-patches", color: "from-purple-600 to-indigo-700", desc: "Issiq va chiroyli Junior Academy hudisi" },
+      { id: 1, name: "Asilbek IT Stikerlar To'plami", price: 50, icon: "fa-tags", color: "from-pink-500 to-rose-500", desc: "Noutbuk va telefonlar uchun dasturchi stikerlari" },
+      { id: 2, name: "Asilbek IT Termos / Suv idishi", price: 150, icon: "fa-bottle-water", color: "from-sky-500 to-cyan-500", desc: "Darslarda qulay ichish uchun brend termos" },
+      { id: 3, name: "Asilbek IT Brend Futbolkasi", price: 250, icon: "fa-shirt", color: "from-indigo-500 to-blue-600", desc: "100% paxta, qulay dasturchilar futbolkasi" },
+      { id: 4, name: "Asilbek IT Hoodie (Tolstovka)", price: 450, icon: "fa-vest-patches", color: "from-purple-600 to-indigo-700", desc: "Issiq va zamonaviy Asilbek IT hudisi" },
       { id: 5, name: "RGB Dasturchi Sichqonchasi", price: 600, icon: "fa-computer-mouse", color: "from-emerald-500 to-teal-600", desc: "Yorug'lik effektlariga ega tezkor sichqoncha" },
       { id: 6, name: "Mexanik RGB Klaviatura", price: 850, icon: "fa-keyboard", color: "from-amber-500 to-orange-600", desc: "Kod yozish uchun maxsus mexanik klaviatura" },
     ];
@@ -777,10 +1105,10 @@
       document.getElementById('market-inventory-tab').classList.toggle('hidden', isShop);
 
       document.getElementById('tab-shop-btn').className = `text-xs font-bold px-3 py-1.5 rounded-xl transition ${
-        isShop ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+        isShop ? 'bg-indigo-600 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200'
       }`;
       document.getElementById('tab-inventory-btn').className = `text-xs font-bold px-3 py-1.5 rounded-xl transition ${
-        !isShop ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+        !isShop ? 'bg-indigo-600 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200'
       }`;
     }
 
@@ -790,16 +1118,16 @@
 
       marketProducts.forEach(prod => {
         const item = document.createElement('div');
-        item.className = "bg-slate-50 border border-slate-200 rounded-2xl p-4 flex items-center justify-between gap-4 hover:border-indigo-300 transition";
+        item.className = "bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-2xl p-4 flex items-center justify-between gap-4 hover:border-indigo-300 transition";
         item.innerHTML = `
           <div class="flex items-center gap-3.5">
             <div class="w-12 h-12 rounded-xl bg-gradient-to-tr ${prod.color} text-white flex items-center justify-center text-xl shadow">
               <i class="fa-solid ${prod.icon}"></i>
             </div>
             <div>
-              <h4 class="font-bold text-sm text-slate-800">${prod.name}</h4>
-              <p class="text-xs text-slate-400">${prod.desc}</p>
-              <span class="inline-block mt-1 font-extrabold text-xs text-amber-600 bg-amber-100/60 px-2 py-0.5 rounded-md">
+              <h4 class="font-bold text-sm text-slate-800 dark:text-white">${prod.name}</h4>
+              <p class="text-xs text-slate-400 dark:text-slate-500">${prod.desc}</p>
+              <span class="inline-block mt-1 font-extrabold text-xs text-amber-600 dark:text-amber-400 bg-amber-100/60 dark:bg-amber-950/40 px-2 py-0.5 rounded-md border border-amber-200 dark:border-amber-800">
                 <i class="fa-solid fa-coins"></i> ${prod.price} Tanga
               </span>
             </div>
@@ -829,7 +1157,7 @@
         confetti({ particleCount: 90, spread: 60 });
         updateInventoryUI();
 
-        alert(`🎉 Xaridingiz uchun rahmat!\n\nSiz "${prod.name}" sovg'asiga muvaffaqiyatli buyurtma berdingiz!\nUstozingiz tez orada darsda topshiradi.`);
+        alert(`🎉 Xarid muvaffaqiyatli!\nSiz "${prod.name}" sovg'asiga buyurtma berdingiz!\nUstozingiz Asilbek IT darsida sizga topshiradi.`);
       } else {
         playSound('wrong');
         alert(`❌ Tangangiz yetarli emas!\n\nSizda: ${userStats.coins} tanga bor.\nKerak: ${prod.price} tanga.\nYana ${prod.price - userStats.coins} ta tanga to'plashingiz kerak!`);
@@ -847,18 +1175,18 @@
       } else {
         emptyMsg.classList.add('hidden');
         list.innerHTML = '';
-        userPurchases.forEach((item, idx) => {
+        userPurchases.forEach((item) => {
           const row = document.createElement('div');
-          row.className = "bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-center justify-between text-xs";
+          row.className = "bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl p-3 flex items-center justify-between text-xs";
           row.innerHTML = `
             <div class="flex items-center gap-3">
-              <i class="fa-solid ${item.icon} text-indigo-600 text-base"></i>
+              <i class="fa-solid ${item.icon} text-indigo-600 dark:text-indigo-400 text-base"></i>
               <div>
-                <p class="font-bold text-slate-800">${item.name}</p>
+                <p class="font-bold text-slate-800 dark:text-slate-100">${item.name}</p>
                 <span class="text-[10px] text-slate-400">Buyurtma vaqti: ${item.date}</span>
               </div>
             </div>
-            <span class="bg-emerald-100 text-emerald-800 font-bold px-2 py-1 rounded-lg text-[10px]">
+            <span class="bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 font-bold px-2 py-1 rounded-lg text-[10px] border border-emerald-200 dark:border-emerald-800">
               ✔ Qabul qilindi
             </span>
           `;
@@ -867,8 +1195,12 @@
       }
     }
 
-    // Dastlabki yuklash
-    renderRoadmap();
+    // Dastlabki yuklanish
+    window.onload = () => {
+      initTheme();
+      renderRoadmap();
+      selectLessonFromRoadmap(1);
+    };
   </script>
 
 </body>
